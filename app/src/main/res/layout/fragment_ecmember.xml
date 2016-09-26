@@ -1,0 +1,97 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/mybackground_color"
+    tools:context="com.dongmihui.fragment.ECMemberFragment">
+
+    <include
+        layout="@layout/layout_main_header" />
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+
+                <ImageView
+                    android:id="@+id/im_avatar"
+                    android:src="@drawable/default_im"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:paddingBottom="2dp"
+                        android:gravity="bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="姓名"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_integral_balance"
+                        android:gravity="top"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="积分余额：0元"
+                        />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_next"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="50dp"
+                    android:padding="10dp"
+                    android:src="@drawable/next_step2"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/ecmember_content_view" />
+
+            <Button
+                android:background="@drawable/em_btn_style_alert_dialog_special"
+                android:id="@+id/but_quit"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="退出登陆"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textColor="@color/white"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="100dp" />
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

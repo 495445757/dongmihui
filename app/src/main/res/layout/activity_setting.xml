@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_setting"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mybackground_color"
+    android:orientation="vertical"
+    tools:context="com.dongmihui.activity.SettingActivity">
+
+    <include layout="@layout/layout_main_header" />
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_account_info"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/list_item_selector"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="14dp"
+            android:text="账户信息"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/list_view_divider" />
+        <TextView
+            android:id="@+id/tv_privacy_settings"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/list_item_selector"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="14dp"
+            android:text="隐私设置"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/list_view_divider" />
+        <TextView
+            android:id="@+id/tv_account_binding"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/list_item_selector"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="14dp"
+            android:text="账户绑定"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/list_view_divider" />
+        <TextView
+            android:id="@+id/tv_message_setting"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/list_item_selector"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="14dp"
+            android:text="消息设置"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/list_view_divider" />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

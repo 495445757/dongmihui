@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/day_layout_bg_normal"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bar_bg"
+        >
+        <ImageView
+            android:id="@+id/im_back"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/btn_back"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:paddingTop="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:text="编辑"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            />
+        <Button
+            android:layout_centerVertical="true"
+            android:background="@color/bar_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="完成"
+            android:layout_marginRight="10dp"
+            android:textSize="17sp"
+            android:textColor="@color/white"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:gravity="center"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="70dp"
+            android:src="@drawable/im_member_head"
+
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+    android:background="@color/white"
+    android:layout_marginTop="10dp"
+    android:id="@+id/layout_user_name"
+    android:layout_width="fill_parent"
+    android:layout_height="45.0dip">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10.0dip"
+        android:text="姓名"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:layout_marginLeft="280dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/tv_name"
+        android:text="张三"
+        android:paddingLeft="15.0dip"
+        android:textColor="#ff111111"
+        android:textSize="16.0sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_marginTop="3dp"
+        android:id="@+id/layout_user_sex"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip">
+
+        <TextView
+            android:id="@+id/tv_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.0dip"
+            android:text="性别"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:layout_marginLeft="290dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_user_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_sex"
+            android:text="男"
+            android:paddingLeft="15.0dip"
+            android:textColor="#ff111111"
+            android:textSize="16.0sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_marginTop="3dp"
+        android:id="@+id/layout_user_job"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip">
+
+        <TextView
+            android:id="@+id/tv_job"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.0dip"
+            android:text="职位"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:layout_marginLeft="220dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_user_job"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_job"
+            android:text="请选择职业"
+            android:textColor="#ffaaaaaa"
+            android:textSize="16.0sp" />
+
+        <ImageView
+            android:layout_marginLeft="300dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/im_user_job"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@+id/tv_job"
+            android:paddingLeft="15.0dip"
+            android:src="@drawable/im_put_next"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_marginTop="3dp"
+        android:id="@+id/layout_user_city"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip">
+
+        <TextView
+            android:id="@+id/tv_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.0dip"
+            android:text="城市"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:layout_marginLeft="180dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_user_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_city"
+            android:text="请选择所在的城市"
+            android:textColor="#ffaaaaaa"
+            android:textSize="16.0sp" />
+
+        <ImageView
+            android:layout_marginLeft="300dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/im_user_city"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@+id/tv_city"
+            android:paddingLeft="15.0dip"
+            android:src="@drawable/im_put_next"
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_marginTop="3dp"
+        android:id="@+id/layout_user_brief"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip">
+
+        <TextView
+            android:id="@+id/tv_brief"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.0dip"
+            android:text="简介"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:layout_marginLeft="180dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/tv_user_brief"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_brief"
+            android:text="介绍一下自己吧"
+            android:textColor="#ffaaaaaa"
+            android:textSize="16.0sp" />
+
+        <ImageView
+            android:layout_marginLeft="300dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/im_user_brief"
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@+id/tv_brief"
+            android:paddingLeft="15.0dip"
+            android:src="@drawable/im_put_next"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

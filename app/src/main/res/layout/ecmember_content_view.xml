@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/mybackground_color"
+    android:layout_height="match_parent">
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/list_view_divider"/>
+
+    <LinearLayout
+        android:id="@+id/ll_account_setting"
+        android:background="@drawable/list_item_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_item_height">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/account_settings"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_item_height"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingRight="14dp"
+            android:text="账户设置"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/list_view_divider"/>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/ll_my_collect"
+        android:background="@drawable/list_item_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_item_height">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/my_collect"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_item_height"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingRight="14dp"
+            android:text="我的收藏"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/list_view_divider"/>
+    <LinearLayout
+        android:id="@+id/ll_my_order"
+        android:background="@drawable/list_item_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_item_height">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/my_order"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_item_height"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingRight="14dp"
+            android:text="我的订单"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/list_view_divider"/>
+    <LinearLayout
+        android:id="@+id/ll_my_investment_and_financing"
+        android:background="@drawable/list_item_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_item_height">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/my_investment_and_financing"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_item_height"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingRight="14dp"
+            android:text="我的投融资"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/list_view_divider"/>
+    <LinearLayout
+        android:id="@+id/ll_my_business"
+        android:background="@drawable/list_item_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_item_height">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/my_business"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_item_height"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingRight="14dp"
+            android:text="我的业务"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/list_view_divider"/>
+    <LinearLayout
+        android:id="@+id/ll_release_road_show"
+        android:background="@drawable/list_item_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_item_height">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/release_road_show"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_item_height"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingRight="14dp"
+            android:text="我的路演"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/list_view_divider"/>
+    <LinearLayout
+        android:id="@+id/ll_my_launch"
+        android:background="@drawable/list_item_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_item_height">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/my_launch"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_item_height"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingRight="14dp"
+            android:text="我的发起"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/list_view_divider"/>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/ll_version_upgrade"
+        android:background="@drawable/list_item_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_item_height">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/version_upgrade"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_item_height"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingRight="14dp"
+            android:text="版本升级"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/list_view_divider"/>
+    <LinearLayout
+        android:id="@+id/ll_about_us"
+        android:background="@drawable/list_item_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_item_height">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/about_us"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_item_height"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingRight="14dp"
+            android:text="关于我们"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/list_view_divider"/>
+    <LinearLayout
+        android:id="@+id/ll_feedback"
+        android:background="@drawable/list_item_selector"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/my_item_height">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/feedback"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/my_item_height"
+            android:drawableRight="@drawable/ic_setting_arrow"
+            android:gravity="center_vertical"
+            android:paddingRight="14dp"
+            android:text="意见反馈"
+            android:textColor="@color/text_color_black"
+            android:textSize="@dimen/text_size_16" />
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@drawable/list_view_divider"/>
+
+</LinearLayout>

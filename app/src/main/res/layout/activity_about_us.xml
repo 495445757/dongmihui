@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/day_layout_bg_normal"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bar_bg"
+        >
+        <ImageView
+            android:id="@+id/im_back"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/btn_back"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:paddingTop="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:text="关于我们"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:background="@color/white"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+        <ImageView
+
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:src="@drawable/im_about_us"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <TextView
+            android:textColor="@color/text_color_dust"
+            android:layout_margin="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="如果你无法简介的表达你的想法，那说明你还不了解它。"
+            />
+        <TextView
+            android:textColor="@color/text_color_dust"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--阿尔伯特·爱因斯坦"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

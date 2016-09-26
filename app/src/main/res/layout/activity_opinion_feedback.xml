@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/day_layout_bg_normal"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bar_bg"
+        >
+        <ImageView
+            android:id="@+id/im_back"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/btn_back"
+            android:layout_centerVertical="true"
+            />
+        <TextView
+            android:paddingTop="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:text="意见反馈"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            />
+
+    </RelativeLayout>
+    <EditText
+
+        android:textSize="16sp"
+        android:hint="您有什么好的意见建议请给我们留言，谢谢！或者直接给我们打电话400-12345678"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/add_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:enabled="true"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:minLines="8"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:background="@android:drawable/edit_text"
+        />
+
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginTop="20dp"
+    android:background="@color/bar_bg"
+    android:text="确定提交"
+    android:textColor="@color/white"
+    />
+</LinearLayout>
