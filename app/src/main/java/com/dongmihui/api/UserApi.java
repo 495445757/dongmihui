@@ -1,5 +1,6 @@
 package com.dongmihui.api;
 
+import com.bumptech.glide.Glide;
 import com.dongmihui.adapter.base.BaseListAdapter;
 import com.dongmihui.bean.ApiMessage;
 import com.dongmihui.utils.ApiConstant;
@@ -25,6 +26,7 @@ public class UserApi {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         server = retrofit.create(UserServer.class);
+
     }
 
     /**

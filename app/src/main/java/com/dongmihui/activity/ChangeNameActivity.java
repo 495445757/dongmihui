@@ -50,7 +50,8 @@ public class ChangeNameActivity extends Activity {
                     //TODO 向服务器发送更改的昵称
                     Intent intent =new Intent(this,MemberEditorActivity.class);
                     intent.putExtra("newName",newName);
-                    startActivityForResult(intent,1000);
+//                    startActivityForResult(intent,1000);
+                    finishActivity(1000);
                    finish();
                 }
 

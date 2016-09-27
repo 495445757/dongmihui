@@ -14,8 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dongmihui.R;
+import com.dongmihui.activity.MemberEditorActivity;
 import com.dongmihui.activity.LoginActivity;
 import com.dongmihui.activity.SettingActivity;
+import com.dongmihui.activity.UsAboutActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -89,8 +91,10 @@ public class ECMemberFragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.im_avatar:
+                MemberEditorActivity.startMemberEditorActivity(getActivity(),tvUserName.getText().toString().trim());
                 break;
             case R.id.iv_next:
+                MemberEditorActivity.startMemberEditorActivity(getActivity(),tvUserName.getText().toString().trim());
                 break;
             case R.id.ll_account_setting:
                 SettingActivity.startSettingActivity(getActivity());
@@ -118,6 +122,7 @@ public class ECMemberFragment extends Fragment {
                 break;
             case R.id.ll_about_us:
                 toast("关于我们");
+                UsAboutActivity.startUsAboutActivity(getActivity());
                 break;
             case R.id.ll_feedback:
                 toast("意见反馈");
