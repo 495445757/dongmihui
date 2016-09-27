@@ -17,6 +17,7 @@ import com.dongmihui.R;
 import com.dongmihui.activity.MemberEditorActivity;
 import com.dongmihui.activity.LoginActivity;
 import com.dongmihui.activity.SettingActivity;
+import com.dongmihui.activity.UsAboutActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -121,6 +122,7 @@ public class ECMemberFragment extends Fragment {
                 break;
             case R.id.ll_about_us:
                 toast("关于我们");
+                UsAboutActivity.startUsAboutActivity(getActivity());
                 break;
             case R.id.ll_feedback:
                 toast("意见反馈");

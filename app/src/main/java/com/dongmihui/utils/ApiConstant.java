@@ -54,4 +54,5 @@ public interface ApiConstant {
      */
     public static String URL_PASSVERIFY = "app/index.php/Member/passVerify";
 
+
 }

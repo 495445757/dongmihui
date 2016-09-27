@@ -136,15 +136,15 @@
             android:name=".im.activity.EditActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <!--黑名单-->
-        <activity android:name=".im.activity.BlacklistActivity"
+        <!-- 黑名单 -->
+        <activity
+            android:name=".im.activity.BlacklistActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.ActivateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ActivateActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <!-- 百度地图所需的service -->
         <service
@@ -162,10 +162,9 @@
             android:value="madashi#testconsole" />
 
         <!-- 通知的发送 -->
-            <receiver
+        <receiver
             android:name=".im.activity.GCMPushBroadCast"
-            android:exported="false" >
-
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.dongmihui" />
 
@@ -207,8 +206,9 @@
         <activity android:name=".activity.PrivacySettingsActivity" />
         <activity android:name=".activity.MemberEditorActivity" />
         <activity android:name=".activity.ChangeNameActivity" />
-        <activity android:name=".activity.BriefInputActivity"></activity>
-        <activity android:name=".activity.ClipImageActivity"/>
+        <activity android:name=".activity.BriefInputActivity" />
+        <activity android:name=".activity.ClipImageActivity" />
+        <activity android:name=".activity.UsAboutActivity"></activity>
     </application>
 
 </manifest>
