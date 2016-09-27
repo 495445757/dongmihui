@@ -136,8 +136,12 @@
             android:name=".im.activity.EditActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
+        <!--黑名单-->
         <activity android:name=".im.activity.BlacklistActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.ActivateActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             />
@@ -158,18 +162,16 @@
             android:value="madashi#testconsole" />
 
         <!-- 通知的发送 -->
-        <!--
             <receiver
-            android:name=".view.GCMPushBroadCast"
+            android:name=".im.activity.GCMPushBroadCast"
             android:exported="false" >
 
             <intent-filter>
-                <action android:name="com.hyphenate.sdk.push" />
+                <action android:name="com.dongmihui" />
 
-                <category android:name="com.hyphenate.chatuidemo" />
+                <category android:name="com.dongmihui" />
             </intent-filter>
         </receiver>
-        -->
         <!-- 声明sdk所需的receiver -->
         <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
             <intent-filter>

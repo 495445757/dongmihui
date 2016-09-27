@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.dongmihui.R;
 import com.dongmihui.activity.MemberEditorActivity;
+import com.dongmihui.activity.LoginActivity;
 import com.dongmihui.activity.SettingActivity;
 
 import butterknife.Bind;
@@ -125,6 +126,7 @@ public class ECMemberFragment extends Fragment {
                 toast("意见反馈");
                 break;
             case R.id.but_quit:
+                LoginActivity.startLoginActivity(getActivity());
                 break;
         }
     }
