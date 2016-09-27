@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dongmihui.R;
+import com.dongmihui.activity.MemberEditorActivity;
 import com.dongmihui.activity.SettingActivity;
 
 import butterknife.Bind;
@@ -88,8 +89,10 @@ public class ECMemberFragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.im_avatar:
+                MemberEditorActivity.startMemberEditorActivity(getActivity(),tvUserName.getText().toString().trim());
                 break;
             case R.id.iv_next:
+                MemberEditorActivity.startMemberEditorActivity(getActivity(),tvUserName.getText().toString().trim());
                 break;
             case R.id.ll_account_setting:
                 SettingActivity.startSettingActivity(getActivity());
