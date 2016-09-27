@@ -680,6 +680,7 @@ public class DemoHelper {
     
     /**
      * save and notify invitation message
+     * 保存消息通知信息
      * @param msg
      */
     private void notifyNewInviteMessage(InviteMessage msg){

@@ -34,11 +34,6 @@ public class SplashActivity extends Activity {
             finish();
             return;
         }else
-
-
-
-
-
         // 如果不是第一次启动app，则正常显示启动屏
         setContentView(R.layout.activity_splash);
         if (!EMClient.getInstance().isLoggedInBefore()) {

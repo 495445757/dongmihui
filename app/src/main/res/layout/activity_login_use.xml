@@ -63,7 +63,7 @@
             android:layout_toRightOf="@+id/imgPhone"
             android:background="@null"
             android:hint="手机号"
-            android:inputType="number"
+            android:inputType="text"
             android:maxLength="11"
             android:paddingLeft="15.0dip"
             android:singleLine="true"
@@ -108,13 +108,14 @@
             android:layout_height="fill_parent"
             android:layout_toRightOf="@+id/imgCode"
             android:background="@null"
-            android:hint="验证码"
-            android:inputType="number"
+            android:hint="密码"
+            android:inputType="textPassword"
             android:maxLength="6"
             android:paddingLeft="15.0dip"
             android:singleLine="true"
             android:textColor="#ff111111"
             android:textColorHint="#ffaaaaaa"
+
             android:textSize="16.0sp" />
 
 
@@ -124,7 +125,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-
+            android:id="@+id/tv_to_editpassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -132,6 +133,7 @@
             android:textSize="18sp"
             />
         <TextView
+            android:id="@+id/tv_to_activate"
             android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -140,7 +142,7 @@
             android:textSize="18sp"
             />
         <RelativeLayout
-
+            android:id="@+id/rl_to_help"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -166,6 +168,9 @@
 
     </LinearLayout>
     <Button
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/btn_login"
         android:textColor="@color/white"
         android:text="立即登陆"
         android:background="@drawable/login_btn_main_bg"
