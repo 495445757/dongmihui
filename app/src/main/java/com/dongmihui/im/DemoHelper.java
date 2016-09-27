@@ -184,7 +184,7 @@ public class DemoHelper {
         
         EMOptions options = new EMOptions();
         // 是否自动接受邀请
-        options.setAcceptInvitationAlways(false);
+        options.setAcceptInvitationAlways(PreferenceManager.getInstance().getAddMeProving());
         // set if you need read ack
         options.setRequireAck(true);
         // set if you need delivery ack
@@ -590,7 +590,7 @@ public class DemoHelper {
             msg.setTo(groupId);
             msg.setMsgId(UUID.randomUUID().toString());
             msg.addBody(new EMTextMessageBody(inviter + " " +st3));
-            msg.setStatus(EMMessage.Status.SUCCESS);
+            msg.setStatus(Status.SUCCESS);
             // save invitation as messages
             EMClient.getInstance().chatManager().saveMessage(msg);
             // notify invitation message

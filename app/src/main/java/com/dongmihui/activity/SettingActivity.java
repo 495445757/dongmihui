@@ -3,9 +3,12 @@ package com.dongmihui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dongmihui.R;
 
@@ -27,6 +30,8 @@ public class SettingActivity extends Activity {
     TextView tvAccountBinding;
     @Bind(R.id.tv_message_setting)
     TextView tvMessageSetting;
+    @Bind(R.id.btnBack)
+    Button btnBack;
 
     public static void startSettingActivity(Activity activity) {
         if (activity != null) {
@@ -41,20 +46,35 @@ public class SettingActivity extends Activity {
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
         textHeadTitle.setText("设置");
+        btnBack.setVisibility(View.VISIBLE);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @OnClick({R.id.tv_account_info, R.id.tv_privacy_settings, R.id.tv_account_binding, R.id.tv_message_setting})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_account_info:
+                toast(tvAccountInfo.getText().toString());
                 break;
             case R.id.tv_privacy_settings:
                 PrivacySettingsActivity.startPrivacySettingsActivity(this);
                 break;
             case R.id.tv_account_binding:
+                toast(tvAccountBinding.getText().toString());
                 break;
             case R.id.tv_message_setting:
+                toast(tvMessageSetting.getText().toString());
                 break;
         }
     }
+
+    public void toast(String string) {
+        Toast.makeText(this, string+"正在开发中", Toast.LENGTH_SHORT).show();
+    }
+
 }

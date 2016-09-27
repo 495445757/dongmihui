@@ -267,7 +267,9 @@ public class DemoModel {
     public boolean isCustomServerEnable(){
         return PreferenceManager.getInstance().isCustomServerEnable();
     }
-    
+
+
+
     enum Key{
         VibrateAndPlayToneOn,
         VibrateOn,

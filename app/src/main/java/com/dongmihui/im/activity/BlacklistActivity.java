@@ -1,7 +1,9 @@
 package com.dongmihui.im.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -30,6 +32,13 @@ import java.util.List;
  */
 public class BlacklistActivity extends BaseActivity {
 	private BlacklistAdapter adapter;
+
+	public static void startBlackListActivity(Activity activity) {
+		if (activity != null) {
+			Intent intent = new Intent(activity, BlacklistActivity.class);
+			activity.startActivity(intent);
+		}
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dongmihui.R;
 import com.dongmihui.activity.SettingActivity;
@@ -94,25 +95,38 @@ public class ECMemberFragment extends Fragment {
                 SettingActivity.startSettingActivity(getActivity());
                 break;
             case R.id.ll_my_collect:
+                toast("我的收藏");
                 break;
             case R.id.ll_my_order:
+                toast("我的订单");
                 break;
             case R.id.ll_my_investment_and_financing:
+                toast("我的投融资");
                 break;
             case R.id.ll_my_business:
+                toast("我的业务");
                 break;
             case R.id.ll_release_road_show:
+                toast("我的路演");
                 break;
             case R.id.ll_my_launch:
+                toast("我的发起");
                 break;
             case R.id.ll_version_upgrade:
+                toast("版本升级");
                 break;
             case R.id.ll_about_us:
+                toast("关于我们");
                 break;
             case R.id.ll_feedback:
+                toast("意见反馈");
                 break;
             case R.id.but_quit:
                 break;
         }
+    }
+
+    public void toast(String string) {
+        Toast.makeText(getActivity(), string+"正在开发中", Toast.LENGTH_SHORT).show();
     }
 }

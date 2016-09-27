@@ -26,27 +26,72 @@ public class PreferenceManager {
 	private static PreferenceManager mPreferencemManager;
 	private static SharedPreferences.Editor editor;
 
+	//接收新消息通知
 	private String SHARED_KEY_SETTING_NOTIFICATION = "shared_key_setting_notification";
+	//声音
 	private String SHARED_KEY_SETTING_SOUND = "shared_key_setting_sound";
+	//震动
 	private String SHARED_KEY_SETTING_VIBRATE = "shared_key_setting_vibrate";
 	private String SHARED_KEY_SETTING_SPEAKER = "shared_key_setting_speaker";
 
+	//允许聊天室群主离开
 	private static String SHARED_KEY_SETTING_CHATROOM_OWNER_LEAVE = "shared_key_setting_chatroom_owner_leave";
+	//退出群组时删除聊天记录
     private static String SHARED_KEY_SETTING_DELETE_MESSAGES_WHEN_EXIT_GROUP = "shared_key_setting_delete_messages_when_exit_group";
+	//自动同意群组加群邀请
     private static String SHARED_KEY_SETTING_AUTO_ACCEPT_GROUP_INVITATION = "shared_key_setting_auto_accept_group_invitation";
+	//视屏自适应码率解码
     private static String SHARED_KEY_SETTING_ADAPTIVE_VIDEO_ENCODE = "shared_key_setting_adaptive_video_encode";
 
 	private static String SHARED_KEY_SETTING_GROUPS_SYNCED = "SHARED_KEY_SETTING_GROUPS_SYNCED";
 	private static String SHARED_KEY_SETTING_CONTACT_SYNCED = "SHARED_KEY_SETTING_CONTACT_SYNCED";
 	private static String SHARED_KEY_SETTING_BALCKLIST_SYNCED = "SHARED_KEY_SETTING_BALCKLIST_SYNCED";
 
+	//当前用户名称
 	private static String SHARED_KEY_CURRENTUSER_USERNAME = "SHARED_KEY_CURRENTUSER_USERNAME";
+	//当前用户首字母
 	private static String SHARED_KEY_CURRENTUSER_NICK = "SHARED_KEY_CURRENTUSER_NICK";
+	//当前用户头像
 	private static String SHARED_KEY_CURRENTUSER_AVATAR = "SHARED_KEY_CURRENTUSER_AVATAR";
 
 	private static String SHARED_KEY_REST_SERVER = "SHARED_KEY_REST_SERVER";
 	private static String SHARED_KEY_IM_SERVER = "SHARED_KEY_IM_SERVER";
+	//启用自定义服务器
 	private static String SHARED_KEY_ENABLE_CUSTOM_SERVER = "SHARED_KEY_ENABLE_CUSTOM_SERVER";
+
+	//加我为好友时需要验证
+	private static String ADD_ME_PROVING = "ADD_ME_PROVING";
+	//可以搜素到我
+	private static String CAN_SEARCH_TO_ME = "CAN_SEARCH_TO_ME";
+	//个人资料公开
+	private static String PERSONAL_INFORMATION_DISCLOSUR = "PERSONAL_INFORMATION_DISCLOSUR";
+
+	public void setPersonalInformationDisclosur(boolean paramBoolean) {
+		editor.putBoolean(PERSONAL_INFORMATION_DISCLOSUR, paramBoolean);
+		editor.apply();
+	}
+
+	public boolean getPersonalInformationDisclosur() {
+		return mSharedPreferences.getBoolean(PERSONAL_INFORMATION_DISCLOSUR, true);
+	}
+
+	public void setCanSearchToMe(boolean paramBoolean) {
+		editor.putBoolean(CAN_SEARCH_TO_ME, paramBoolean);
+		editor.apply();
+	}
+
+	public boolean getCanSearchToMe() {
+		return mSharedPreferences.getBoolean(CAN_SEARCH_TO_ME, true);
+	}
+
+	public void setAddMeProving(boolean paramBoolean) {
+		editor.putBoolean(ADD_ME_PROVING, paramBoolean);
+		editor.apply();
+	}
+
+	public boolean getAddMeProving() {
+		return mSharedPreferences.getBoolean(ADD_ME_PROVING, false);
+	}
 
 	@SuppressLint("CommitPrefEdits")
 	private PreferenceManager(Context cxt) {
@@ -63,7 +108,7 @@ public class PreferenceManager {
 	/**
 	 * get instance of PreferenceManager
 	 *
-	 * @param cxt
+	 * @param
 	 * @return
 	 */
 	public synchronized static PreferenceManager getInstance() {

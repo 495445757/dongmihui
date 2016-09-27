@@ -137,6 +137,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
+        <activity android:name=".im.activity.BlacklistActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            />
+
         <!-- 百度地图所需的service -->
         <service
             android:name="com.baidu.location.f"
@@ -197,7 +202,10 @@
         </receiver>
 
         <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.PrivacySettingsActivity"></activity>
+        <activity android:name=".activity.PrivacySettingsActivity" />
+        <activity android:name=".activity.MemberEditorActivity" />
+        <activity android:name=".activity.ChangeNameActivity" />
+        <activity android:name=".activity.BriefInputActivity"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/day_layout_bg_normal"
     >
     <RelativeLayout
@@ -44,6 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp">
         <ImageView
+            android:id="@+id/im_avatar"
             android:layout_width="80dp"
             android:layout_height="70dp"
             android:src="@drawable/im_member_head"
@@ -52,6 +54,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+
     android:background="@color/white"
     android:layout_marginTop="10dp"
     android:id="@+id/layout_user_name"
@@ -69,17 +72,17 @@
         />
 
     <TextView
-        android:layout_marginLeft="280dp"
         android:layout_centerVertical="true"
         android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/tv_name"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
         android:text="张三"
-        android:paddingLeft="15.0dip"
         android:textColor="#ff111111"
         android:textSize="16.0sp" />
-    </RelativeLayout>
+    </RelativeLayout
+>
 
     <RelativeLayout
         android:background="@color/white"
@@ -99,14 +102,13 @@
             />
 
         <TextView
-            android:layout_marginLeft="290dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
             android:id="@+id/tv_user_sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tv_sex"
             android:text="男"
-            android:paddingLeft="15.0dip"
             android:textColor="#ff111111"
             android:textSize="16.0sp" />
 
