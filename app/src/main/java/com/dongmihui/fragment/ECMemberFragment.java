@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.dongmihui.R;
 import com.dongmihui.activity.MemberEditorActivity;
 import com.dongmihui.activity.LoginActivity;
@@ -21,6 +22,8 @@ import com.dongmihui.activity.SettingActivity;
 import com.dongmihui.activity.UsAboutActivity;
 import com.dongmihui.api.MyApi;
 import com.dongmihui.bean.MemberBean;
+import com.dongmihui.utils.SpUtils;
+import com.dongmihui.utils.TLog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -72,7 +75,7 @@ public class ECMemberFragment extends Fragment {
     @Bind(R.id.but_quit)
     Button butQuit;
     private MyApi api;
-
+    boolean isFirst =true;
     public ECMemberFragment() {
         // Required empty public constructor
     }
@@ -91,25 +94,24 @@ public class ECMemberFragment extends Fragment {
     }
     //联网获取用户信息 初始化用户信息
     private void initView() {
-     api.getMember(4, new Callback<MemberBean>() {
-         @Override
-         public void onResponse(Call<MemberBean> call, Response<MemberBean> response) {
-             MemberBean body = response.body();
-             if(body.getCode()==0){
-                 Toast.makeText(getActivity(), body.getMsg(), Toast.LENGTH_SHORT).show();
-             }else if(body.getCode()==1){
-                 Toast.makeText(getActivity(), body.getMsg(), Toast.LENGTH_SHORT).show();
-                 Log.d("MemberFragment", "msg：" + response.body().toString());
+        int anInt = SpUtils.getInt(getActivity(), SpUtils.USER_ID);
+        api.getMember(3, new Callback<MemberBean>() {
+            @Override
+            public void onResponse(Call<MemberBean> call, Response<MemberBean> response) {
+                MemberBean body = response.body();
+                if(body.getCode()==0){
+                    TLog.log("MmberFragment",body.toString()+"00000000000000000000");
+                }else if(body.getCode() == 1){
+                    tvUserName.setText(body.result.getUserName());
+                    TLog.log("MmberFragment",body.toString()+"111111111111111111111111");
+                }
+            }
 
-             }
-         }
+            @Override
+            public void onFailure(Call<MemberBean> call, Throwable t) {
 
-         @Override
-         public void onFailure(Call<MemberBean> call, Throwable t) {
-             Log.d("MemberFragment", t.toString());
-         }
-     });
-
+            }
+        });
     }
 
     @Override
