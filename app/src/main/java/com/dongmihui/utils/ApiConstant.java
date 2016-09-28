@@ -54,6 +54,8 @@ public interface ApiConstant {
      * 找回密码接口(验证手机号验证码)
      */
     public static String URL_PASSVERIFY = "app/index.php/Member/passVerify";
-
-
+    /**
+     * 我的界面的用户信息接口
+     */
+    public static String URL_MEMBER="app/index.php/Usercenter/userInfo";
 }

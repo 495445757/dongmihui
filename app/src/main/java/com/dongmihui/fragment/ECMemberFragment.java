@@ -3,6 +3,7 @@ package com.dongmihui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,15 @@ import com.dongmihui.activity.MemberEditorActivity;
 import com.dongmihui.activity.LoginActivity;
 import com.dongmihui.activity.SettingActivity;
 import com.dongmihui.activity.UsAboutActivity;
+import com.dongmihui.api.MyApi;
+import com.dongmihui.bean.MemberBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,6 +71,7 @@ public class ECMemberFragment extends Fragment {
     LinearLayout llFeedback;
     @Bind(R.id.but_quit)
     Button butQuit;
+    private MyApi api;
 
     public ECMemberFragment() {
         // Required empty public constructor
@@ -77,8 +84,32 @@ public class ECMemberFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ecmember, container, false);
         ButterKnife.bind(this, view);
+        api = new MyApi();
         textHeadTitle.setText("我的");
+        initView();
         return view;
+    }
+    //联网获取用户信息 初始化用户信息
+    private void initView() {
+     api.getMember(4, new Callback<MemberBean>() {
+         @Override
+         public void onResponse(Call<MemberBean> call, Response<MemberBean> response) {
+             MemberBean body = response.body();
+             if(body.getCode()==0){
+                 Toast.makeText(getActivity(), body.getMsg(), Toast.LENGTH_SHORT).show();
+             }else if(body.getCode()==1){
+                 Toast.makeText(getActivity(), body.getMsg(), Toast.LENGTH_SHORT).show();
+                 Log.d("MemberFragment", "msg：" + response.body().toString());
+
+             }
+         }
+
+         @Override
+         public void onFailure(Call<MemberBean> call, Throwable t) {
+             Log.d("MemberFragment", t.toString());
+         }
+     });
+
     }
 
     @Override
