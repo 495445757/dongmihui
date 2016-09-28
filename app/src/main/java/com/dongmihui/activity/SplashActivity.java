@@ -37,18 +37,17 @@ public class SplashActivity extends Activity {
         // 如果不是第一次启动app，则正常显示启动屏
         setContentView(R.layout.activity_splash);
         if (!EMClient.getInstance().isLoggedInBefore()) {
-//            enterLogingActivity();
-            signIn();
+            enterLogingActivity();
         } else {
-            enterHomeActivity();
+//            enterHomeActivity();
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    enterHomeActivity();
+                }
+            }, 2000);
         }
-//        new Handler().postDelayed(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                enterHomeActivity();
-//            }
-//        }, 2000);
     }
 
     private void enterHomeActivity() {

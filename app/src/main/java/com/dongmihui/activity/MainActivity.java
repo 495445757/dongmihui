@@ -1,6 +1,8 @@
 
 package com.dongmihui.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -26,6 +28,13 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseFragmentActivity  implements
         TabHost.OnTabChangeListener, BaseViewInterface, View.OnClickListener,
         View.OnTouchListener{
+
+    public static void startMainActivity(Activity activity) {
+        if (activity != null) {
+            Intent intent = new Intent(activity, MainActivity.class);
+            activity.startActivity(intent);
+        }
+    }
 
     @Bind(android.R.id.tabhost)
     MyFragmentTabHost mTabHost;

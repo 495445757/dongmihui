@@ -90,6 +90,7 @@ public class ActivateActivity extends Activity {
                     Toast.makeText(ActivateActivity.this, "body.getCode():" + body.getCode(), Toast.LENGTH_SHORT).show();
                 } else if (body.getCode() == 1) {
                     Toast.makeText(ActivateActivity.this, "body.getResult().getUserId():" + body.getResult().getUserId(), Toast.LENGTH_SHORT).show();
+                    RegisterActivity.startRegisterActivity(ActivateActivity.this);
                 }
             }
 

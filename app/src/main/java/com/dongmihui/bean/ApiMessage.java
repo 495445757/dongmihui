@@ -81,13 +81,22 @@ public class ApiMessage<T> {
          * id : 2
          * userName : 254138
          * corporName : 董秘荟
-         * sex : 男
-         * avatar : http://192.168.2.3/data/avatar/avatar.jpg
+         * hxName : 环信账户
          */
+
 
         private int id;
         private String userName;
         private String corporName;
+        private String hxName;
+
+        public String getHxName() {
+            return hxName;
+        }
+
+        public void setHxName(String hxName) {
+            this.hxName = hxName;
+        }
 
         public int getId() {
             return id;

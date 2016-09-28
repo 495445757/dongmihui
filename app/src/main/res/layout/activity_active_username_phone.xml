@@ -133,12 +133,12 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10.0dip"
                 android:text="密 码"
-                android:textColor="@color/text_color_gray"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 />
 
             <EditText
-                android:id="@+id/phone2"
+                android:id="@+id/edt_password"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_toRightOf="@+id/imgPhone2"
@@ -156,6 +156,7 @@
 
 
         <Button
+            android:id="@+id/but_regist"
             android:textColor="@color/white"
             android:text="激活账号"
             android:background="@color/login_ash"

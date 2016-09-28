@@ -4,28 +4,31 @@ android:orientation="vertical" android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="@color/day_layout_bg_normal"
     >
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/title_height"
     android:background="@color/bar_bg"
     >
     <ImageView
+        android:layout_centerVertical="true"
         android:id="@+id/iv_back_register"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="12dp"
         android:src="@drawable/btn_back"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
         />
     <TextView
-        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
-
-        android:text="激活账号"
+        android:text="验证邮箱"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="18sp"
         />
-</LinearLayout>
+</RelativeLayout>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -116,10 +119,12 @@ android:background="@color/day_layout_bg_normal"
     </RelativeLayout>
 
     <Button
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/but_next"
         android:textColor="@color/white"
         android:text="下一步"
-        android:background="@color/login_ash"
+        android:background="@drawable/em_btn_style_alert_dialog_special"
         android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

@@ -159,7 +159,7 @@
         <!-- 设置环信应用的 appkey 换成自己的 -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="madashi#testconsole" />
+            android:value="1111160921178561#cheng1234" />
 
         <!-- 通知的发送 -->
         <receiver
@@ -208,7 +208,8 @@
         <activity android:name=".activity.ChangeNameActivity" />
         <activity android:name=".activity.BriefInputActivity" />
         <activity android:name=".activity.ClipImageActivity" />
-        <activity android:name=".activity.UsAboutActivity"></activity>
+        <activity android:name=".activity.UsAboutActivity" />
+        <activity android:name=".activity.RegisterActivity"></activity>
     </application>
 
 </manifest>
