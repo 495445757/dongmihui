@@ -1,6 +1,7 @@
 package com.dongmihui.api;
 
 import com.dongmihui.common.AppContext;
+import com.dongmihui.utils.ApiConstant;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -46,7 +47,7 @@ public class DongmihuiApi {
 //            params.put("pageToken", pageToken);
 //        }
 
-        ApiHttpClient.get("test.txt", params, handler);
+        ApiHttpClient.get(ApiConstant.url+ApiConstant.URL_INDEX, params, handler);
     }
     public static void getChatList(String pageToken, AsyncHttpResponseHandler handler) {
         RequestParams params = new RequestParams();

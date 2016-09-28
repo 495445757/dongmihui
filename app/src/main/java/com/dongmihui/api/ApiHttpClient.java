@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.dongmihui.common.AppContext;
+import com.dongmihui.utils.ApiConstant;
 import com.dongmihui.utils.TLog;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -16,8 +17,8 @@ import cz.msebera.android.httpclient.client.params.ClientPNames;
 
 public class ApiHttpClient {
 
-    public final static String HOST = "www.henanxinlong.com";
-    private static String API_URL = "http://www.henanxinlong.com/%s";
+    public final static String HOST = "www.cheng520.top";
+    private static String API_URL = ApiConstant.url+"%s";
     public static final String DELETE = "DELETE";
     public static final String GET = "GET";
     public static final String POST = "POST";

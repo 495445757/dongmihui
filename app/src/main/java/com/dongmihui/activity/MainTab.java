@@ -2,6 +2,7 @@ package com.dongmihui.activity;
 
 
 import com.dongmihui.R;
+import com.dongmihui.fragment.ECHomeFragment;
 import com.dongmihui.fragment.ECMemberFragment;
 import com.dongmihui.fragment.EvaluationFragment;
 import com.dongmihui.fragment.MemberFragment;
@@ -14,7 +15,7 @@ import com.dongmihui.im.fragment.ConversationListFragment;
  */
 public enum MainTab {
     HOME(0, R.string.main_navigation_home, R.drawable.tab_icon_home,
-            HomeIndexFragment.class),
+            ECHomeFragment.class),
 
     NEWS(1, R.string.main_navigation_news, R.drawable.tab_icon_news,
             NewsPagerViewPageFragment.class),

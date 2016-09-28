@@ -58,4 +58,25 @@ public interface ApiConstant {
      * 我的界面的用户信息接口
      */
     public static String URL_MEMBER="app/index.php/Usercenter/userInfo";
+
+    /**
+     * 首页
+     */
+    public static String URL_INDEX = "app/index.php/Index/index";
+    /**
+     * 搜索好友
+     */
+    public static final String URL_SEARCHUSER = "app/index.php/Message/searchUser";
+    /**
+     * 搜索群组
+     */
+    public static final String URL_SEARCHGROUP = "app/index.php/Message/searchGroup";
+    /**
+     * 获取好友列表
+     */
+    public static final String URL_GET_FRIEND = "app/index.php/Message/getFriend";
+    /**
+     * 修改昵称
+     */
+    public static final String URL_EDITNAME = "app/index.php/Message/editName";
 }
