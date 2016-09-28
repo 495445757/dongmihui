@@ -209,6 +209,7 @@
         <activity android:name=".activity.BriefInputActivity" />
         <activity android:name=".activity.ClipImageActivity" />
         <activity android:name=".activity.UsAboutActivity" />
+        <activity android:name=".activity.JobSetActivity" />
         <activity android:name=".activity.RegisterActivity"></activity>
     </application>
 

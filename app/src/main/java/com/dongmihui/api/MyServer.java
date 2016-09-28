@@ -1,5 +1,6 @@
 package com.dongmihui.api;
 
+import com.dongmihui.bean.MemberBean;
 import com.dongmihui.utils.ApiConstant;
 
 import retrofit2.Call;
@@ -12,7 +13,7 @@ import retrofit2.http.POST;
  */
 public interface MyServer {
 
-    @POST(ApiConstant.URL_ACTIVATE)
+    @POST(ApiConstant.URL_MEMBER)
     @FormUrlEncoded
-    Call<String> getLog(@Field("name") String name);
+    Call<MemberBean> getMemberInfo(@Field("id") int id);
 }
