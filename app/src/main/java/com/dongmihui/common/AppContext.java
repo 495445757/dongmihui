@@ -27,6 +27,8 @@ public class AppContext extends BaseApplication {
         app = this;
     }
 
+    public static String currentUserNick="";
+
     public static synchronized AppContext getInstance() {
         if (app == null) {
             app = new AppContext();

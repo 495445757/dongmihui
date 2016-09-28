@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/day_layout_bg_normal"
+    android:fitsSystemWindows="true"
     >
   <LinearLayout
       android:layout_width="match_parent"
@@ -11,14 +12,23 @@
       android:gravity="center"
 
       >
-      <ImageView
-          android:layout_marginTop="5dp"
-          android:layout_width="65dp"
-          android:layout_height="wrap_content"
-          android:src="@drawable/text_bar"
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:textColor="#fff"
+          android:text="登陆"
+          android:textSize="18sp"
           />
 
   </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -56,21 +66,6 @@
             android:textSize="16sp"
             />
 
-        <EditText
-            android:id="@+id/phone"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_toRightOf="@+id/imgPhone"
-            android:background="@null"
-            android:hint="手机号"
-            android:inputType="text"
-            android:maxLength="11"
-            android:paddingLeft="15.0dip"
-            android:singleLine="true"
-            android:textColor="#ff111111"
-            android:textColorHint="#ffaaaaaa"
-            android:textSize="16.0sp" />
-
         <ImageView
             android:id="@+id/imgCancel"
             android:layout_width="16.0dip"
@@ -80,6 +75,23 @@
             android:layout_marginRight="12.0dip"
             android:background="@drawable/cancel_phone"
             android:visibility="invisible" />
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@null"
+            android:layout_toRightOf="@+id/imgPhone"
+            android:hint="手机号"
+            android:inputType="text"
+            android:paddingLeft="15.0dip"
+            android:singleLine="true"
+            android:textColor="#ff111111"
+            android:textColorHint="#ffaaaaaa"
+            android:textSize="16.0sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -110,7 +122,6 @@
             android:background="@null"
             android:hint="密码"
             android:inputType="textPassword"
-            android:maxLength="6"
             android:paddingLeft="15.0dip"
             android:singleLine="true"
             android:textColor="#ff111111"
@@ -177,5 +188,6 @@
         android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

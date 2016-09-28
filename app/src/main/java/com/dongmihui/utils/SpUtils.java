@@ -6,7 +6,14 @@ import android.content.SharedPreferences;
 public class SpUtils {
     private static final String spFileName = "app";
 
-
+    //用户ID
+    public static final String USER_ID = "userID";
+    //用户名称
+    public static final String USER_NAME = "userName";
+    //用户环信账户
+    public static final String USER_HXNAME = "userHxName";
+    //用户公司名
+    public static final String CORPOR_NAME = "corporName";
     public static String getString(Context context, String strKey) {
         SharedPreferences setPreferences = context.getSharedPreferences(
                 spFileName, Context.MODE_PRIVATE);

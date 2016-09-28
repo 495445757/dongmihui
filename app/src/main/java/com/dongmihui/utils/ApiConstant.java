@@ -6,7 +6,8 @@ package com.dongmihui.utils;
 
 public interface ApiConstant {
 
-    public static String url = "http://192.168.2.3/";
+//    public static String url = "http://192.168.2.3/";
+    public static final String url = "http://www.cheng520.top/";
 
     /**
      * 验证邮箱激活码接口
