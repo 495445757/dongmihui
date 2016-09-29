@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.dongmihui.R;
 import com.dongmihui.api.UserApi;
 import com.dongmihui.bean.ApiMessage;
+import com.dongmihui.bean.LoginBean;
 import com.dongmihui.common.AppContext;
 import com.dongmihui.im.DemoHelper;
 import com.dongmihui.im.db.DemoDBManager;
@@ -115,33 +116,57 @@ public class LoginActivity extends SwipeBackActivity {
 
         DemoDBManager.getInstance().closeDB();
 
-        api.login(phoneNum, password, new Callback<ApiMessage<ApiMessage.LogingCode>>() {
+        api.loginNew(phoneNum, password, new Callback<LoginBean>() {
             @Override
-            public void onResponse(Call<ApiMessage<ApiMessage.LogingCode>> call, Response<ApiMessage<ApiMessage.LogingCode>> response) {
-                ApiMessage<ApiMessage.LogingCode> body = response.body();
+            public void onResponse(Call<LoginBean> call, Response<LoginBean> response) {
+                LoginBean body = response.body();
                 if (body.getCode() == 0) {
                     pd.dismiss();
-                    Toast.makeText(LoginActivity.this, body.getMsg(), Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(LoginActivity.this, "body.getCode():" + body.getMsg().getErrorMessage(), Toast.LENGTH_SHORT).show();
                 } else if (body.getCode() == 1) {
-                    ApiMessage.LogingCode result = body.getResult();
-                    if (result != null) {
-                        SpUtils.putInt(getBaseContext(),SpUtils.USER_ID,result.getId());
-                        SpUtils.putString(getBaseContext(),SpUtils.USER_HXNAME,result.getUserName());
-                        SpUtils.putString(getBaseContext(),SpUtils.CORPOR_NAME,result.getCorporName());
-                        String hxName = result.getHxName();
-                        SpUtils.putString(getBaseContext(),SpUtils.USER_HXNAME,hxName);
-                        hxLogin(hxName,password);
-                    }
+                    LoginBean.UserBean user = body.getUser();
+                    SpUtils.putInt(getBaseContext(),SpUtils.USER_ID,user.getId());
+                    SpUtils.putString(getBaseContext(),SpUtils.USER_HXNAME,user.getUserName());
+                    SpUtils.putString(getBaseContext(),SpUtils.CORPOR_NAME,user.getCorporName());
+                    hxLogin(user.getUserName(),password);
                 }
-
             }
 
             @Override
-            public void onFailure(Call<ApiMessage<ApiMessage.LogingCode>> call, Throwable t) {
+            public void onFailure(Call<LoginBean> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "登陆失败", Toast.LENGTH_SHORT).show();
                 Log.d("LoginActivity", t.toString());
+                pd.dismiss();
             }
         });
+
+//        api.login(phoneNum, password, new Callback<ApiMessage<ApiMessage.LogingCode>>() {
+//            @Override
+//            public void onResponse(Call<ApiMessage<ApiMessage.LogingCode>> call, Response<ApiMessage<ApiMessage.LogingCode>> response) {
+//                ApiMessage<ApiMessage.LogingCode> body = response.body();
+//                if (body.getCode() == 0) {
+//                    pd.dismiss();
+//                    Toast.makeText(LoginActivity.this, body.getMsg(), Toast.LENGTH_SHORT).show();
+//
+//                } else if (body.getCode() == 1) {
+//                    ApiMessage.LogingCode result = body.getResult();
+//                    if (result != null) {
+//                        SpUtils.putInt(getBaseContext(),SpUtils.USER_ID,result.getId());
+//                        SpUtils.putString(getBaseContext(),SpUtils.USER_HXNAME,result.getUserName());
+//                        SpUtils.putString(getBaseContext(),SpUtils.CORPOR_NAME,result.getCorporName());
+//                        String hxName = result.getHxName();
+//                        SpUtils.putString(getBaseContext(),SpUtils.USER_HXNAME,hxName);
+//                        hxLogin(hxName,password);
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ApiMessage<ApiMessage.LogingCode>> call, Throwable t) {
+//                Log.d("LoginActivity", t.toString());
+//            }
+//        });
     }
 
     private void hxLogin(final String hxName, String passwd) {
@@ -163,13 +188,14 @@ public class LoginActivity extends SwipeBackActivity {
                 if (!LoginActivity.this.isFinishing() && pd.isShowing()) {
                     pd.dismiss();
                 }
+                DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
                 MainActivity.startMainActivity(LoginActivity.this);
                 finish();
             }
 
             @Override
             public void onError(int i, final String s) {
-                Log.d("LoginActivity", "登陆失败：code：" + i + " message：" + s);
+                Log.d("LoginActivity", "登陆失败：code：" + i + " message：" + s+"name : "+hxName);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

@@ -9,6 +9,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.dongmihui.R;
+import com.dongmihui.activity.LoginActivity;
+import com.dongmihui.activity.MainActivity;
 import com.dongmihui.api.IMApi;
 import com.dongmihui.api.IMService;
 import com.dongmihui.bean.ApiMessage;
@@ -703,25 +705,25 @@ public class DemoHelper {
         getNotifier().vibrateAndPlayTone(null);
     }
     
-//    /**
-//     * 用户已登录到另一个设备
-//     */
-//    protected void onConnectionConflict(){
-//        Intent intent = new Intent(appContext, MainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        intent.putExtra(Constant.ACCOUNT_CONFLICT, true);
-//        appContext.startActivity(intent);
-//    }
-//
-//    /**
-//     *帐户被删除
-//     */
-//    protected void onCurrentAccountRemoved(){
-//        Intent intent = new Intent(appContext, MainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        intent.putExtra(Constant.ACCOUNT_REMOVED, true);
-//        appContext.startActivity(intent);
-//    }
+    /**
+     * 用户已登录到另一个设备
+     */
+    protected void onConnectionConflict(){
+        Intent intent = new Intent(appContext, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(Constant.ACCOUNT_CONFLICT, true);
+        appContext.startActivity(intent);
+    }
+
+    /**
+     *帐户被删除
+     */
+    protected void onCurrentAccountRemoved(){
+        Intent intent = new Intent(appContext, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(Constant.ACCOUNT_REMOVED, true);
+        appContext.startActivity(intent);
+    }
 	
 	private EaseUser getUserInfo(String username){
 		// To get instance of EaseUser, here we get it from the user list in memory

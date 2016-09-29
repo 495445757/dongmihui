@@ -1,9 +1,11 @@
 package com.dongmihui.api;
 
 import com.dongmihui.bean.ApiMessage;
+import com.dongmihui.bean.LoginBean;
 import com.dongmihui.utils.ApiConstant;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -35,6 +37,12 @@ public interface UserServer {
     @FormUrlEncoded
     Call<ApiMessage<ApiMessage.LogingCode>> getLogin(@Field("account") String account,
                                                      @Field("passWord") String password);
+
+    @POST(ApiConstant.URL_LOGIN)
+    @FormUrlEncoded
+    Call<LoginBean> getLoingNew(@Field("account") String account,
+                                @Field("passWord") String password);
+
 
     @POST(ApiConstant.URL_PASSVERIFY)
     @FormUrlEncoded

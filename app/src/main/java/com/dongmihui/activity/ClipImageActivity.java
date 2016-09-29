@@ -35,7 +35,7 @@ public class ClipImageActivity extends BaseActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clip_image);
-        type = getIntent().getIntExtra("type", 1);
+        type = getIntent().getIntExtra("type", 2);
 
         initView();
     }
