@@ -2,8 +2,10 @@ package com.dongmihui.fragment;
 
 
 import android.app.ProgressDialog;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +19,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dongmihui.R;
-import com.dongmihui.activity.LoginActivity;
 import com.dongmihui.activity.MemberEditorActivity;
+import com.dongmihui.activity.LoginActivity;
 import com.dongmihui.activity.SettingActivity;
 import com.dongmihui.activity.UsAboutActivity;
 import com.dongmihui.api.MyApi;
@@ -26,6 +28,9 @@ import com.dongmihui.bean.MemberBean;
 import com.dongmihui.common.AppContext;
 import com.dongmihui.utils.SpUtils;
 import com.dongmihui.utils.TLog;
+import com.dongmihui.im.DemoHelper;
+import com.hyphenate.EMCallBack;
+
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -133,6 +138,12 @@ public class ECMemberFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        initView();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
@@ -178,7 +189,7 @@ public class ECMemberFragment extends Fragment {
                 toast("意见反馈");
                 break;
             case R.id.but_quit:
-                LoginActivity.startLoginActivity(getActivity());
+                logout();
                 break;
         }
     }
@@ -186,4 +197,45 @@ public class ECMemberFragment extends Fragment {
     public void toast(String string) {
         Toast.makeText(getActivity(), string+"正在开发中", Toast.LENGTH_SHORT).show();
     }
+
+    void logout() {
+        final ProgressDialog pd = new ProgressDialog(getActivity());
+        String st = getResources().getString(R.string.Are_logged_out);
+        pd.setMessage(st);
+        pd.setCanceledOnTouchOutside(false);
+        pd.show();
+        DemoHelper.getInstance().logout(false,new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        pd.dismiss();
+                        // show login screen
+                        getActivity().finish();
+                        LoginActivity.startLoginActivity(getActivity());
+                    }
+                });
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // TODO Auto-generated method stub
+                        pd.dismiss();
+                        Toast.makeText(getActivity(), "unbind devicetokens failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
+
 }
