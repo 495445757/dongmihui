@@ -1,10 +1,17 @@
 package com.dongmihui.bean;
 
+<<<<<<< HEAD
 
 /**
  * Created by Android on 2016/9/28.
  */
 public class MemberBean  {
+=======
+/**
+ * Created by Android on 2016/9/28.
+ */
+public class MemberBean {
+>>>>>>> refs/remotes/origin/master
 
     /**
      * code : 1
@@ -62,7 +69,10 @@ public class MemberBean  {
                 '}';
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/master
     public static class ResultBean {
         public int id;
         public int jifen;
@@ -70,18 +80,36 @@ public class MemberBean  {
         public String sex;
         public String jobs;
         public String avatar;
+<<<<<<< HEAD
         public String home;
+=======
+        public String province;
+        public String city;
+        public String district;
+>>>>>>> refs/remotes/origin/master
         public String desc;
 
         public String getAvatar() {
             return avatar;
         }
 
+<<<<<<< HEAD
+=======
+        public String getCity() {
+            return city;
+        }
+>>>>>>> refs/remotes/origin/master
 
         public String getDesc() {
             return desc;
         }
 
+<<<<<<< HEAD
+=======
+        public String getDistrict() {
+            return district;
+        }
+>>>>>>> refs/remotes/origin/master
 
         public int getId() {
             return id;
@@ -95,6 +123,12 @@ public class MemberBean  {
             return jobs;
         }
 
+<<<<<<< HEAD
+=======
+        public String getProvince() {
+            return province;
+        }
+>>>>>>> refs/remotes/origin/master
 
         public String getSex() {
             return sex;
@@ -108,11 +142,23 @@ public class MemberBean  {
             this.avatar = avatar;
         }
 
+<<<<<<< HEAD
+=======
+        public void setCity(String city) {
+            this.city = city;
+        }
+>>>>>>> refs/remotes/origin/master
 
         public void setDesc(String desc) {
             this.desc = desc;
         }
 
+<<<<<<< HEAD
+=======
+        public void setDistrict(String district) {
+            this.district = district;
+        }
+>>>>>>> refs/remotes/origin/master
 
         public void setId(int id) {
             this.id = id;
@@ -126,6 +172,12 @@ public class MemberBean  {
             this.jobs = jobs;
         }
 
+<<<<<<< HEAD
+=======
+        public void setProvince(String province) {
+            this.province = province;
+        }
+>>>>>>> refs/remotes/origin/master
 
         public void setSex(String sex) {
             this.sex = sex;
@@ -134,6 +186,7 @@ public class MemberBean  {
         public void setUserName(String userName) {
             this.userName = userName;
         }
+<<<<<<< HEAD
 
         public String getHome() {
             return home;
@@ -144,3 +197,7 @@ public class MemberBean  {
         }
     }
 }
+=======
+    }
+}
+>>>>>>> refs/remotes/origin/master

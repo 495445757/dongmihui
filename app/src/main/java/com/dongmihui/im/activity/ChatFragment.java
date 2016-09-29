@@ -9,7 +9,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,13 +21,18 @@ import android.widget.Toast;
 
 import com.dongmihui.R;
 import com.dongmihui.activity.MainActivity;
+import com.dongmihui.api.IMApi;
+import com.dongmihui.bean.ApiMessage;
+import com.dongmihui.bean.ContactListBean;
 import com.dongmihui.im.DemoHelper;
+import com.dongmihui.im.DemoModel;
 import com.dongmihui.im.constant.Constant;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.ui.EaseChatFragment.EaseChatFragmentHelper;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
@@ -38,10 +45,14 @@ import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Map;
 
-
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHelper {
+
+
 
 	// constant start from 11 to avoid conflict with constant in base class
     private static final int ITEM_VIDEO = 11;
@@ -70,6 +81,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     private static final int ITEM_RED_PACKET = 16;
     //end of red packet code
 
+    private IMApi api;
+
     /**
      * if it is chatBot
      */
@@ -83,7 +96,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     @Override
     protected void initView() {
         super.initView();
-
+        api = new IMApi();
     }
 
     @Override
@@ -97,6 +110,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 //        }
         super.setUpView();
         // 设置点击监听
+
         titleBar.setBackgroundColor(getResources().getColor(R.color.main_header_bg));
         titleBar.setLeftLayoutClickListener(new OnClickListener() {
 
@@ -110,6 +124,30 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
             }
         });
         if (chatType == Constant.CHATTYPE_SINGLE) {
+
+            Map<String, EaseUser> contactList = DemoHelper.getInstance().getContactList();
+            EaseUser user = contactList.get(toChatUsername);
+            Log.d(TAG, "avtart:"+user.getAvatar());
+            if (!TextUtils.isEmpty(user.getNickname())) {
+                titleBar.setTitle(user.getNickname());
+            }else {
+                api.getUserInfo(toChatUsername, new Callback<ApiMessage<ContactListBean>>() {
+                    @Override
+                    public void onResponse(Call<ApiMessage<ContactListBean>> call, Response<ApiMessage<ContactListBean>> response) {
+                        if (response.body().getCode() == 1) {
+                            if (!TextUtils.isEmpty(response.body().getResult().getNickName())) {
+                                titleBar.setTitle(response.body().getResult().getNickName());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiMessage<ContactListBean>> call, Throwable t) {
+
+                    }
+                });
+            }
+
             titleBar.setRightLayoutClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -9,6 +9,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.dongmihui.R;
+import com.dongmihui.api.IMApi;
+import com.dongmihui.api.IMService;
+import com.dongmihui.bean.ApiMessage;
+import com.dongmihui.bean.ContactListBean;
+import com.dongmihui.bean.GroupBean;
 import com.dongmihui.im.activity.ECChatActivity;
 import com.dongmihui.im.bean.InviteMessage;
 import com.dongmihui.im.constant.Constant;
@@ -44,6 +49,7 @@ import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -51,6 +57,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 //import com.hyphenate.chatuidemo.domain.EmojiconExampleGroupData;
@@ -1080,6 +1089,7 @@ public class DemoHelper {
                List<String> usernames = null;
                try {
                    usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
+
                    // in case that logout already before server returns, we should return immediately
                    if(!isLoggedIn()){
                        isContactsSyncedWithServer = false;
@@ -1087,7 +1097,7 @@ public class DemoHelper {
                        notifyContactsSyncListener(false);
                        return;
                    }
-                  
+
                    Map<String, EaseUser> userlist = new HashMap<String, EaseUser>();
                    for (String username : usernames) {
                        EaseUser user = new EaseUser(username);
@@ -1132,11 +1142,11 @@ public class DemoHelper {
                    isSyncingContactsWithServer = false;
                    notifyContactsSyncListener(false);
                    e.printStackTrace();
-                   if(callback != null){
+                   if (callback != null) {
                        callback.onError(e.getErrorCode(), e.toString());
                    }
                }
-               
+
            }
        }.start();
    }
