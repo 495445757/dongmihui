@@ -19,6 +19,7 @@ import com.dongmihui.R;
 import com.dongmihui.api.MyApi;
 import com.dongmihui.bean.ApiMessage;
 import com.dongmihui.common.AppContext;
+import com.dongmihui.utils.SpUtils;
 import com.dongmihui.utils.ToastUtil;
 
 import butterknife.Bind;
@@ -158,7 +159,8 @@ public class SettingAccountActivity extends Activity {
     public void getVerifyCode() {
         phoneNumber = phone.getText().toString().trim();
         if(!TextUtils.isEmpty(phoneNumber)){
-            api.getVerifyCode(phoneNumber, 1, new Callback<ApiMessage>() {
+            int anInt = SpUtils.getInt(this, SpUtils.USER_ID);
+            api.getVerifyCode(phoneNumber, anInt, new Callback<ApiMessage>() {
                 @Override
                 public void onResponse(Call<ApiMessage> call, Response<ApiMessage> response) {
                     verifyBody = response.body();
@@ -235,7 +237,7 @@ public class SettingAccountActivity extends Activity {
     private void setViewPwd() {
         tvModfiyphone.setTextColor(this.getResources().getColor(R.color.bar_bg));
         tvModfiypwd.setTextColor(this.getResources().getColor(R.color.white));
-        tvModfiypwd.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.modif_phone_pressed));
+        tvModfiypwd.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.im_modifypwd));
         tvModfiyphone.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.modifypwd));
         layoutPhone.setVisibility(View.GONE);
         layoutPhone1.setVisibility(View.GONE);

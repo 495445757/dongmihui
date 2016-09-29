@@ -39,6 +39,7 @@ import com.dongmihui.bean.ProvinceBean;
 import com.dongmihui.common.AppContext;
 import com.dongmihui.im.activity.BaseActivity;
 import com.dongmihui.utils.JsonFileReader;
+import com.dongmihui.utils.SpUtils;
 import com.dongmihui.utils.TLog;
 import com.dongmihui.utils.ToastUtil;
 import com.dongmihui.widget.CircleImageView;
@@ -76,6 +77,7 @@ public class MemberEditorActivity extends BaseActivity {
     private static final int REQUEST_CROP_PHOTO = 102;
     private static final int CHANGEJOB = 1100;
 
+    String avatar;
 
     //  省份
     ArrayList<ProvinceBean> provinceBeanList = new ArrayList<>();
@@ -123,9 +125,10 @@ public class MemberEditorActivity extends BaseActivity {
     private MyApi api = new MyApi();
     OptionsPickerView pvOptions;
     private String newJob;
-    private ApiMessage<List<String>> avatarBody;
-    private MemberBean body;
+
     ProgressDialog pd;
+    private int anInt;
+
     public static void startMemberEditorActivity(Activity activity) {
         if (activity != null) {
             Intent intent = new Intent(activity, MemberEditorActivity.class);
@@ -238,13 +241,14 @@ public class MemberEditorActivity extends BaseActivity {
         if(pd==null){
             pd=new ProgressDialog(MemberEditorActivity.this);
         }
-        pd.setCanceledOnTouchOutside(false);
+        pd.setCanceledOnTouchOutside(true);
         pd.setMessage("加载中。。。");
         pd.show();
-        api.getMember(4, new Callback<MemberBean>() {
+        anInt = SpUtils.getInt(this, SpUtils.USER_ID);
+        api.getMember(anInt, new Callback<MemberBean>() {
             @Override
             public void onResponse(Call<MemberBean> call, Response<MemberBean> response) {
-                body = response.body();
+                MemberBean body = response.body();
                 if (body.getCode() == 0) {
                     TLog.log("MmberFragment", body.toString() + "00000000000000000000");
                     pd.dismiss();
@@ -255,6 +259,7 @@ public class MemberEditorActivity extends BaseActivity {
                     tvUserCity.setText(body.result.home);
                     ToastUtil.showShort(AppContext.getInstance(),tvUserCity.toString());
                     tvUserBrief.setText(body.result.getDesc());
+                    avatar = body.result.getAvatar();
                     Glide.with(AppContext.getInstance())
                             .load(body.result.getAvatar())
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -308,7 +313,10 @@ public class MemberEditorActivity extends BaseActivity {
                     api.putFiel(4,cropImagePath, new Callback<ApiMessage<List<String>>>() {
                         @Override
                         public void onResponse(Call<ApiMessage<List<String>>> call, Response<ApiMessage<List<String>>> response) {
-                            avatarBody = response.body();
+                            ApiMessage<List<String>> avatarBody = response.body();
+                            if(response.body().getCode()==1){
+                                avatar=avatarBody.getResult().get(0);
+                            }
                             ToastUtil.showShort(AppContext.getInstance(), avatarBody.getResult().get(0));
 
                         }
@@ -320,6 +328,8 @@ public class MemberEditorActivity extends BaseActivity {
                     });
                     Bitmap bitMap = BitmapFactory.decodeFile(cropImagePath);
                     if (type == 1) {
+                        imAvatar.setImageBitmap(bitMap);
+                    }else{
                         imAvatar.setImageBitmap(bitMap);
                     }
 
@@ -380,14 +390,8 @@ public class MemberEditorActivity extends BaseActivity {
         ToastUtil.showShort(AppContext.getInstance(),city);
 
         String desc =tvUserBrief.getText().toString();
-        String avatar = "";
-        if(avatarBody.getResult().get(0)!=null&&!TextUtils.isEmpty(avatarBody.getResult().get(0))){
-            avatar=avatarBody.getResult().get(0);
-        }else{
-            avatar =body.result.getAvatar();
-        }
 
-        api.setAboutMember(4, name, sex,job ,city,desc ,avatar, new Callback<String>() {
+        api.setAboutMember(anInt, name, sex,job ,city,desc ,avatar, new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         String body = response.body();

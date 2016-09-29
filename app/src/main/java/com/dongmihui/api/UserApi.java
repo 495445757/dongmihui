@@ -3,6 +3,7 @@ package com.dongmihui.api;
 import com.bumptech.glide.Glide;
 import com.dongmihui.adapter.base.BaseListAdapter;
 import com.dongmihui.bean.ApiMessage;
+import com.dongmihui.bean.LoginBean;
 import com.dongmihui.utils.ApiConstant;
 
 import retrofit2.Call;
@@ -37,6 +38,11 @@ public class UserApi {
      */
     public void login(String account, String password, Callback<ApiMessage<ApiMessage.LogingCode>> callback) {
         Call<ApiMessage<ApiMessage.LogingCode>> login = server.getLogin(account, password);
+        login.enqueue(callback);
+    }
+
+    public void loginNew(String account, String password, Callback<LoginBean> callback) {
+        Call<LoginBean> login = server.getLoingNew(account, password);
         login.enqueue(callback);
     }
 

@@ -145,14 +145,12 @@
             android:textSize="16.0sp" />
 
         <ImageView
-            android:layout_marginLeft="315dp"
+
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:id="@+id/im_user_job"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_toRightOf="@+id/tv_job"
-
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/im_put_next"
             />
 
@@ -187,13 +185,13 @@
             android:textSize="16.0sp" />
 
         <ImageView
-            android:layout_marginLeft="315dp"
+
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:id="@+id/im_user_city"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_toRightOf="@+id/tv_city"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
             android:src="@drawable/im_put_next"
             />
 
@@ -228,13 +226,13 @@
             android:textSize="16.0sp" />
 
         <ImageView
-            android:layout_marginLeft="315dp"
+
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:id="@+id/im_user_brief"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_toRightOf="@+id/tv_brief"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
             android:src="@drawable/im_put_next"
             />
 
