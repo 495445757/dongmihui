@@ -37,7 +37,10 @@ import com.dongmihui.bean.ApiMessage;
 import com.dongmihui.bean.MemberBean;
 import com.dongmihui.bean.ProvinceBean;
 import com.dongmihui.common.AppContext;
+import com.dongmihui.im.DemoHelper;
+import com.dongmihui.im.DemoModel;
 import com.dongmihui.im.activity.BaseActivity;
+import com.dongmihui.im.utils.PreferenceManager;
 import com.dongmihui.utils.JsonFileReader;
 import com.dongmihui.utils.SpUtils;
 import com.dongmihui.utils.TLog;
@@ -310,12 +313,16 @@ public class MemberEditorActivity extends BaseActivity {
                         return;
                     }
                     String cropImagePath = getRealFilePathFromUri(getApplicationContext(), uri1);
-                    api.putFiel(4,cropImagePath, new Callback<ApiMessage<List<String>>>() {
+                    api.putFiel(anInt,cropImagePath, new Callback<ApiMessage<List<String>>>() {
                         @Override
                         public void onResponse(Call<ApiMessage<List<String>>> call, Response<ApiMessage<List<String>>> response) {
                             ApiMessage<List<String>> avatarBody = response.body();
                             if(response.body().getCode()==1){
                                 avatar=avatarBody.getResult().get(0);
+                                //将头像存入本地
+                                PreferenceManager.getInstance().setCurrentUserAvatar(avatar);
+                                //通知更新
+                                DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
                             }
                             ToastUtil.showShort(AppContext.getInstance(), avatarBody.getResult().get(0));
 
@@ -396,6 +403,7 @@ public class MemberEditorActivity extends BaseActivity {
                     public void onResponse(Call<String> call, Response<String> response) {
                         String body = response.body();
                         ToastUtil.showShort(AppContext.getInstance(),"完成:"+body);
+                        DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
                         pd.dismiss();
 //                        ToastUtil.showShort(AppContext.getInstance(),body.getCode());
 //                        if(body.getCode()==0){

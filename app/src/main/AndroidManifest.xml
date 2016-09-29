@@ -210,6 +210,7 @@
         <activity android:name=".activity.ClipImageActivity" />
         <activity android:name=".activity.UsAboutActivity" />
         <activity android:name=".activity.JobSetActivity" />
+
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.SettingAccountActivity"></activity>
         <activity android:name=".im.activity.GroupSimpleDetailActivity"></activity>

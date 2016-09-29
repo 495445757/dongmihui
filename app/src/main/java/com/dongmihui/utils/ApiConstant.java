@@ -9,6 +9,7 @@ public interface ApiConstant {
 //    public static String url = "http://192.168.2.3/";
 
 //    public static final String url = "http://www.cheng520.top/";
+
     public static final String url = "http://dmh2.hnwxq.com/";
 
     /**
@@ -60,6 +61,7 @@ public interface ApiConstant {
      * 我的界面的用户信息接口
      */
     public static String URL_MEMBER="app/index.php/Usercenter/userInfo";
+
     /**
      * 上传用户修改信息
      */
@@ -79,6 +81,8 @@ public interface ApiConstant {
      */
 
     public static String URL_MODIFYPHONE="app/index.php/Usercenter/phone";
+
+
     /**
      * 首页
      */
@@ -103,4 +107,5 @@ public interface ApiConstant {
      * 获取USer信息
      */
     public static final String URL_USER_INFO = "app/index.php/Message/userInfo";
+
 }
