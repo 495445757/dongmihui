@@ -77,6 +77,8 @@
 -keep class com.umeng.** { *; }
 -keep class com.squareup.picasso.* {*;}
 
+-keep class com.dongmihui.bean.** {*;}
+
 -keep class com.hyphenate.* {*;}
 -keep class com.hyphenate.chat.** {*;}
 -keep class org.jivesoftware.** {*;}

@@ -59,7 +59,7 @@ public class SettingActivity extends Activity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_account_info:
-                toast(tvAccountInfo.getText().toString());
+               SettingAccountActivity.startSettingAccountActivity(this);
                 break;
             case R.id.tv_privacy_settings:
                 PrivacySettingsActivity.startPrivacySettingsActivity(this);

@@ -1,65 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/day_layout_bg_normal"
-    >
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bar_bg"
-        >
+        android:background="@color/bar_bg">
+
         <ImageView
+            android:id="@+id/back"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/btn_back"
             android:layout_marginTop="10dp"
-            />
+            android:src="@drawable/btn_back" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="48dp"
 
-            android:text="账号信息"
             android:gravity="center"
+            android:text="账号信息"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_marginBottom="20dp"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:orientation="horizontal"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
         android:gravity="center"
-        >
-        <TextView
-            android:gravity="center"
-        android:layout_width="80dp"
-        android:layout_height="30dp"
-        android:textSize="14sp"
-        android:text="修改手机号"
-            android:textColor="@color/white"
-            android:background="@drawable/btn_modfiy_pressed_bg"
+        android:orientation="horizontal">
 
-        />
-        <TextView
-            android:gravity="center"
+        <Button
+            android:id="@+id/tv_modfiyphone"
             android:layout_width="80dp"
             android:layout_height="30dp"
-            android:text="修改密码"
-            android:textColor="@color/bar_bg"
+            android:background="@drawable/btn_modfiy_pressed_bg"
+            android:gravity="center"
+            android:text="修改手机号"
+            android:textColor="@color/white"
             android:textSize="14sp"
-            android:background="@drawable/btn_modfiy_bg"
+
             />
 
+        <Button
+            android:id="@+id/tv_modfiypwd"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:background="@drawable/btn_modfiy_bg"
+            android:gravity="center"
+            android:text="修改密码"
+            android:textColor="@color/bar_bg"
+            android:textSize="14sp" />
+
     </LinearLayout>
+
     <RelativeLayout
-        android:background="@color/white"
-        android:layout_marginTop="10dp"
         android:id="@+id/layoutPhone"
         android:layout_width="fill_parent"
-        android:layout_height="45.0dip">
+        android:layout_height="45.0dip"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/imgPhone"
@@ -68,8 +73,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10.0dip"
             android:text="输入手机号码"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/phone"
@@ -96,12 +100,13 @@
             android:background="@drawable/cancel_phone"
             android:visibility="invisible" />
     </RelativeLayout>
-    <RelativeLayout
-        android:background="@color/white"
 
+    <RelativeLayout
+        android:id="@+id/layoutPhone1"
         android:layout_width="fill_parent"
         android:layout_height="45.0dip"
-        android:layout_below="@+id/layoutPhone">
+        android:layout_below="@+id/layoutPhone"
+        android:background="@color/white">
 
         <ImageView
             android:layout_width="fill_parent"
@@ -115,7 +120,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10.0dip"
             android:text="输入验证码"
-            android:textSize="16sp"                />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/code"
@@ -132,23 +137,27 @@
             android:textColorHint="#ffaaaaaa"
             android:textSize="16.0sp" />
 
-        <ImageView
-            android:id="@+id/btnGetCode"
-            android:layout_width="85.0dip"
-            android:layout_height="33.0dip"
+        <TextView
+            android:gravity="center"
+            android:id="@+id/im_GetCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10.0dip"
-            android:src="@drawable/im_getcode"
-            />
+            android:text="获取验证码"
+            android:textSize="16sp"
+            android:textColor="@color/bar_bg"
+             />
     </RelativeLayout>
+
     <RelativeLayout
-        android:visibility="gone"
-        android:background="@color/white"
-        android:layout_marginTop="10dp"
         android:id="@+id/layout_modfiy_pwd"
         android:layout_width="fill_parent"
-        android:layout_height="45.0dip">
+        android:layout_height="45.0dip"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/modfiypwd"
@@ -157,8 +166,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10.0dip"
             android:text="原密码"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/old_pwd"
@@ -175,23 +183,15 @@
             android:textColorHint="#ffaaaaaa"
             android:textSize="16.0sp" />
 
-        <ImageView
-            android:id="@+id/imgCancel"
-            android:layout_width="16.0dip"
-            android:layout_height="16.0dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="12.0dip"
-            android:background="@drawable/cancel_phone"
-            android:visibility="invisible" />
     </RelativeLayout>
-    <RelativeLayout
-        android:visibility="gone"
-        android:background="@color/white"
 
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="45.0dip"
-        android:layout_below="@+id/layoutPhone">
+        android:id="@+id/layout_modfiy_pwd1"
+        android:layout_below="@+id/layout_modfiy_pwd"
+        android:background="@color/white"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="fill_parent"
@@ -205,7 +205,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10.0dip"
             android:text="新密码"
-            android:textSize="16sp"                />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/put_newpwd"
@@ -224,15 +224,19 @@
 
 
     </RelativeLayout>
+
     <RelativeLayout
-        android:visibility="gone"
-        android:background="@color/white"
+        android:id="@+id/layout_modfiy_pwd2"
         android:layout_width="match_parent"
-        android:layout_height="45.0dip">
+        android:layout_height="45.0dip"
+        android:background="@color/white"
+        android:visibility="gone">
+
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="0.5dip"
             android:background="#ffdddddd" />
+
         <TextView
             android:id="@+id/once_newpwd"
             android:layout_width="wrap_content"
@@ -240,7 +244,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10.0dip"
             android:text="确认密码"
-            android:textSize="16sp"                />
+            android:textSize="16sp" />
+
         <EditText
             android:id="@+id/put_once_newpwd"
             android:layout_width="fill_parent"
@@ -257,19 +262,28 @@
             android:textSize="16.0sp" />
 
 
-
     </RelativeLayout>
 
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btn_ok_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@color/login_ash"
+        android:text="确认修改"
+        android:textColor="@color/white" />
 
 
 
     <Button
-        android:textColor="@color/white"
-        android:text="确认修改"
-        android:background="@color/login_ash"
-        android:layout_marginTop="25dp"
+        android:id="@+id/btn_ok"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@color/login_ash"
+        android:text="确认修改"
+        android:textColor="@color/white" />
 
 
 </LinearLayout>

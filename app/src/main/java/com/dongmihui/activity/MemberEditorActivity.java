@@ -2,6 +2,7 @@ package com.dongmihui.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,35 +10,53 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dongmihui.R;
-import com.dongmihui.im.DemoModel;
+import com.dongmihui.api.MyApi;
+import com.dongmihui.bean.ApiMessage;
+import com.dongmihui.bean.MemberBean;
+import com.dongmihui.bean.ProvinceBean;
+import com.dongmihui.common.AppContext;
 import com.dongmihui.im.activity.BaseActivity;
+import com.dongmihui.utils.JsonFileReader;
 import com.dongmihui.utils.TLog;
 import com.dongmihui.utils.ToastUtil;
 import com.dongmihui.widget.CircleImageView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 编辑个人信息的界面
@@ -50,8 +69,23 @@ public class MemberEditorActivity extends BaseActivity {
 
     //更改的名字
     private static final int CHANGENAME = 1000;
+
+    //更改的名字
+    private static final int CHANGEBEIEF = 1003;
     //请求截图
     private static final int REQUEST_CROP_PHOTO = 102;
+    private static final int CHANGEJOB = 1100;
+
+
+    //  省份
+    ArrayList<ProvinceBean> provinceBeanList = new ArrayList<>();
+    //  城市
+    ArrayList<String> cities;
+    ArrayList<List<String>> cityList = new ArrayList<>();
+    //  区/县
+    ArrayList<String> district;
+    ArrayList<List<String>> districts;
+    ArrayList<List<List<String>>> districtList = new ArrayList<>();
     @Bind(R.id.im_back)
     ImageView imBack;
     @Bind(R.id.im_avatar)
@@ -78,17 +112,23 @@ public class MemberEditorActivity extends BaseActivity {
     TextView tvUserCity;
     @Bind(R.id.tv_user_brief)
     TextView tvUserBrief;
+    @Bind(R.id.btn_update)
+    Button update;
     private String newName;
     private String newSex;
     private Uri uri;
     private int type;
     //调用照相机返回图片临时文件
     private File tempFile;
+    private MyApi api = new MyApi();
     OptionsPickerView pvOptions;
-    public static void startMemberEditorActivity(Activity activity, String name) {
+    private String newJob;
+    private ApiMessage<List<String>> avatarBody;
+    private MemberBean body;
+    ProgressDialog pd;
+    public static void startMemberEditorActivity(Activity activity) {
         if (activity != null) {
             Intent intent = new Intent(activity, MemberEditorActivity.class);
-            intent.putExtra("newName", name);
             activity.startActivity(intent);
         }
     }
@@ -101,84 +141,283 @@ public class MemberEditorActivity extends BaseActivity {
         createCameraTempFile(savedInstanceState);
         ButterKnife.bind(this);
         initView();
+        initPicker();
 
     }
 
+    private void initPicker() {
+
+
+        //  获取json数据
+        String province_data_json = JsonFileReader.getJson(this, "province_data.json");
+        //  解析json数据
+        parseJson(province_data_json);
+
+        //  设置三级联动效果
+        pvOptions.setPicker(provinceBeanList, cityList, districtList, true);
+
+
+        //  设置选择的三级单位
+        //pvOptions.setLabels("省", "市", "区");
+        //pvOptions.setTitle("选择城市");
+
+        //  设置是否循环滚动
+        pvOptions.setCyclic(false, false, false);
+
+
+        // 设置默认选中的三级项目
+        pvOptions.setSelectOptions(0, 0, 0);
+        //  监听确定选择按钮
+        pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                //返回的分别是三个级别的选中位置
+                String city = provinceBeanList.get(options1).getPickerViewText();
+                String address;
+                //  如果是直辖市或者特别行政区只设置市和区/县
+                if ("北京市".equals(city) || "上海市".equals(city) || "天津市".equals(city) || "重庆市".equals(city) || "澳门".equals(city) || "香港".equals(city)) {
+                    address = provinceBeanList.get(options1).getPickerViewText()
+                            + " " + districtList.get(options1).get(option2).get(options3);
+                } else {
+                    address = provinceBeanList.get(options1).getPickerViewText()
+                            + " " + cityList.get(options1).get(option2)
+                            + " " + districtList.get(options1).get(option2).get(options3);
+                }
+                tvUserCity.setText(address);
+            }
+        });
+
+    }
+    //  解析json填充集合
+    public void parseJson(String str) {
+        try {
+            //  获取json中的数组
+            JSONArray jsonArray = new JSONArray(str);
+            //  遍历数据组
+            for (int i = 0; i < jsonArray.length(); i++) {
+                //  获取省份的对象
+                JSONObject provinceObject = jsonArray.optJSONObject(i);
+                //  获取省份名称放入集合
+                String provinceName = provinceObject.getString("name");
+
+                provinceBeanList.add(new ProvinceBean(provinceName));
+                //  获取城市数组
+                JSONArray cityArray = provinceObject.optJSONArray("city");
+                cities = new ArrayList<>();//   声明存放城市的集合
+                districts = new ArrayList<>();//声明存放区县集合的集合
+                //  遍历城市数组
+                for (int j = 0; j < cityArray.length(); j++) {
+                    //  获取城市对象
+                    JSONObject cityObject = cityArray.optJSONObject(j);
+                    //  将城市放入集合
+                    String cityName = cityObject.optString("name");
+                    cities.add(cityName);
+                    district = new ArrayList<>();// 声明存放区县的集合
+                    //  获取区县的数组
+                    JSONArray areaArray = cityObject.optJSONArray("area");
+                    //  遍历区县数组，获取到区县名称并放入集合
+                    for (int k = 0; k < areaArray.length(); k++) {
+                        String areaName = areaArray.getString(k);
+                        district.add(areaName);
+                    }
+                    //  将区县的集合放入集合
+                    districts.add(district);
+                }
+                //  将存放区县集合的集合放入集合
+                districtList.add(districts);
+                //  将存放城市的集合放入集合
+                cityList.add(cities);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     private void initView() {
-        String newName = getIntent().getExtras().getString("newName");
-        DemoModel model = new DemoModel(this);
-        tvUserName.setText(newName);
+        if(pd==null){
+            pd=new ProgressDialog(MemberEditorActivity.this);
+        }
+        pd.setCanceledOnTouchOutside(false);
+        pd.setMessage("加载中。。。");
+        pd.show();
+        api.getMember(4, new Callback<MemberBean>() {
+            @Override
+            public void onResponse(Call<MemberBean> call, Response<MemberBean> response) {
+                body = response.body();
+                if (body.getCode() == 0) {
+                    TLog.log("MmberFragment", body.toString() + "00000000000000000000");
+                    pd.dismiss();
+                } else if (body.getCode() == 1) {
+                    tvUserName.setText(body.result.getUserName());
+                    tvUserSex.setText(body.result.getSex());
+                    tvUserJob.setText(body.result.getJobs());
+                    tvUserCity.setText(body.result.home);
+                    ToastUtil.showShort(AppContext.getInstance(),tvUserCity.toString());
+                    tvUserBrief.setText(body.result.getDesc());
+                    Glide.with(AppContext.getInstance())
+                            .load(body.result.getAvatar())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(imAvatar);
+                    pd.dismiss();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<MemberBean> call, Throwable t) {
+                pd.dismiss();
+            }
+        });
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) {
 
-        if(resultCode==RESULT_OK){
-            switch (requestCode){
+            Log.d("MmberFragment", requestCode + "");
+            switch (requestCode) {
                 case CHANGENAME:
-                    newName = data.getExtras().getString("newName");
+                    this.newName = data.getStringExtra("newName");
+                    Log.d("MmberFragment", "NewName:" + newName + this.newName);
+//                    setupText();
+                    tvUserName.setText(newName);
+                    break;
+                case CHANGEJOB:
+                    newJob = data.getStringExtra("newJob");
+                    tvUserJob.setText(newJob);
+                    break;
+                case CHANGEBEIEF:
+                    String newDec = data.getStringExtra("newDec");
+                    tvUserBrief.setText(newDec);
                     break;
                 case REQUEST_CAPTURE: //调用系统相机返回
-                        gotoClipActivity(Uri.fromFile(tempFile));
+                    gotoClipActivity(Uri.fromFile(tempFile));
                     break;
                 case REQUEST_PICK:  //调用系统相册返回
-                        Uri uri = data.getData();
-                        gotoClipActivity(uri);
+                    Uri uri = data.getData();
+                    gotoClipActivity(uri);
                     break;
                 case REQUEST_CROP_PHOTO:  //剪切图片返回
-                        final Uri uri1 = data.getData();
-                        if (uri1 == null) {
-                            return;
+                    final Uri uri1 = data.getData();
+                    Log.d("URL", uri1.toString());
+                    if (uri1 == null) {
+                        return;
+                    }
+                    String cropImagePath = getRealFilePathFromUri(getApplicationContext(), uri1);
+                    api.putFiel(4,cropImagePath, new Callback<ApiMessage<List<String>>>() {
+                        @Override
+                        public void onResponse(Call<ApiMessage<List<String>>> call, Response<ApiMessage<List<String>>> response) {
+                            avatarBody = response.body();
+                            ToastUtil.showShort(AppContext.getInstance(), avatarBody.getResult().get(0));
+
                         }
-                        String cropImagePath = getRealFilePathFromUri(getApplicationContext(), uri1);
-                        Bitmap bitMap = BitmapFactory.decodeFile(cropImagePath);
-                        if (type == 1) {
-                            imAvatar.setImageBitmap(bitMap);
+
+                        @Override
+                        public void onFailure(Call<ApiMessage<List<String>>> call, Throwable t) {
+                            ToastUtil.showShort(AppContext.getInstance(),t.toString());
                         }
-                        //此处后面可以将bitMap转为二进制上传后台网络
-                        //......
+                    });
+                    Bitmap bitMap = BitmapFactory.decodeFile(cropImagePath);
+                    if (type == 1) {
+                        imAvatar.setImageBitmap(bitMap);
+                    }
+
 
                     break;
             }
+
         }
     }
 
-    @OnClick({R.id.im_back, R.id.im_avatar, R.id.layout_user_name, R.id.layout_user_sex, R.id.layout_user_job, R.id.layout_user_city, R.id.layout_user_brief})
+    @OnClick({R.id.btn_update,R.id.im_back, R.id.im_avatar, R.id.layout_user_name, R.id.layout_user_sex, R.id.layout_user_job, R.id.layout_user_city, R.id.layout_user_brief})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.im_back:
                 finish();
                 break;
             case R.id.im_avatar:
-                type=1;
+                type = 1;
                 uploadHeadImage();
                 break;
             case R.id.layout_user_name:
-                startActivity(new Intent(this, ChangeNameActivity.class));
+                startActivityForResult(new Intent(this, ChangeNameActivity.class), CHANGENAME);
                 break;
             case R.id.layout_user_sex:
-               sexDialog();
+                sexDialog();
                 break;
             case R.id.layout_user_job:
+                startActivityForResult(new Intent(this, JobSetActivity.class), CHANGEJOB);
                 break;
             case R.id.layout_user_city:
                 pvOptions.show();
                 break;
             case R.id.layout_user_brief:
-                startActivity(new Intent(this, BriefInputActivity.class));
+                startActivityForResult(new Intent(this, BriefInputActivity.class), CHANGEBEIEF);
+                break;
+            case R.id.btn_update:
+                update();
                 break;
         }
     }
+
+    /**
+     * 提交用户的信息到服务器
+     */
+
+    private void update() {
+        if(pd==null){
+            pd=new ProgressDialog(MemberEditorActivity.this);
+        }
+        pd.setCanceledOnTouchOutside(false);
+        pd.setMessage("加载中。。。");
+        pd.show();
+        String name = tvUserName.getText().toString();
+        String sex = tvUserSex.getText().toString();
+        String job = tvUserJob.getText().toString();
+        String city = tvUserCity.getText().toString();
+
+        ToastUtil.showShort(AppContext.getInstance(),city);
+
+        String desc =tvUserBrief.getText().toString();
+        String avatar = "";
+        if(avatarBody.getResult().get(0)!=null&&!TextUtils.isEmpty(avatarBody.getResult().get(0))){
+            avatar=avatarBody.getResult().get(0);
+        }else{
+            avatar =body.result.getAvatar();
+        }
+
+        api.setAboutMember(4, name, sex,job ,city,desc ,avatar, new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        String body = response.body();
+                        ToastUtil.showShort(AppContext.getInstance(),"完成:"+body);
+                        pd.dismiss();
+//                        ToastUtil.showShort(AppContext.getInstance(),body.getCode());
+//                        if(body.getCode()==0){
+//                            ToastUtil.showShort(AppContext.getInstance(),"失败");
+//                        }else if(body.getCode()==1){
+//                            ToastUtil.showShort(AppContext.getInstance(),"成功");
+//                        }
+                        Log.d("LOG", body);
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        ToastUtil.showShort(AppContext.getInstance(),t.toString());
+
+                        pd.dismiss();
+                    }
+                });
+    }
+
     //选择性别的对话框
-    private void sexDialog(){
-        final String items[]={"男","女"};
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);  //先得到构造器
+    private void sexDialog() {
+        final String items[] = {"男", "女"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);  //先得到构造器
         builder.setTitle("请选择性别"); //设置标题
-        builder.setSingleChoiceItems(items,-1,new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -187,26 +426,20 @@ public class MemberEditorActivity extends BaseActivity {
                 newSex = items[which];
             }
         });
-        builder.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                Toast.makeText(MemberEditorActivity.this, "确定", Toast.LENGTH_SHORT).show();
-               setupText();
+                //Toast.makeText(MemberEditorActivity.this, "确定", Toast.LENGTH_SHORT).show();
+                tvUserSex.setText(newSex);
             }
         });
         builder.create().show();
     }
 
 
-
-    private void setupText() {
-
-        tvUserSex.setText(newSex);
-    }
-
     /**
-     * 上传头像
+     * 从本地上传头像
      */
     private void uploadHeadImage() {
         View view = LayoutInflater.from(this).inflate(R.layout.layout_popupwindow, null);
@@ -292,7 +525,6 @@ public class MemberEditorActivity extends BaseActivity {
     }
 
 
-
     /**
      * 打开截图界面
      *
@@ -300,8 +532,8 @@ public class MemberEditorActivity extends BaseActivity {
      */
     public void gotoClipActivity(Uri uri) {
         if (uri == null) {
-            ToastUtil.showShort(this,"meijinqu");
-            TLog.log("uri"+"++++++++++++++");
+            ToastUtil.showShort(this, "meijinqu");
+            TLog.log("uri" + "++++++++++++++");
             return;
         }
         Intent intent = new Intent();
