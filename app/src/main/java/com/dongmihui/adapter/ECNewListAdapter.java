@@ -1,28 +1,25 @@
 package com.dongmihui.adapter;
 
-import android.view.View;
-
 import com.dongmihui.R;
 import com.dongmihui.adapter.base.BaseListAdapter;
-import com.dongmihui.bean.NewsEntity;
+import com.dongmihui.bean.NewBean;
 
 import java.util.List;
 
 /**
- * Created by administrator on 2016-09-19.
+ * Created by Administrator on 2016/9/28.
  */
-public class NewsListAdapter extends BaseListAdapter<NewsEntity> {
-    private String systemTime;
 
-    public NewsListAdapter(Callback callback) {
+public class ECNewListAdapter extends BaseListAdapter<NewBean.ZixunBean>{
+    public ECNewListAdapter(Callback callback) {
         super(callback);
     }
 
     @Override
-    protected void convert(ViewHolder vh, NewsEntity item, int position) {
+    protected void convert(ViewHolder vh, NewBean.ZixunBean item, int position) {
         //  vh.setText(R.id.item_title, item.getTitle());
         // vh.setText(R.id.item_content, item.getSummary());
-        List<String> imgUrlList = item.getPicList();
+        List<NewBean.ZixunBean.LitpicBean> imgUrlList = item.getLitpic();
         if (imgUrlList.size() == 3)
 //{
 //    vh.setVisibility(R.id.article_layout);
@@ -38,28 +35,22 @@ public class NewsListAdapter extends BaseListAdapter<NewsEntity> {
 
             vh.setText(R.id.item_abstract, item.getTitle());
 
-            vh.setImageForNet(R.id.item_image_0, imgUrlList.get(0));
-            vh.setImageForNet(R.id.item_image_1, imgUrlList.get(1));
-            vh.setImageForNet(R.id.item_image_2, imgUrlList.get(2));
+            vh.setImageForNet(R.id.item_image_0, imgUrlList.get(0).getPic());
+            vh.setImageForNet(R.id.item_image_1, imgUrlList.get(1).getPic());
+            vh.setImageForNet(R.id.item_image_2, imgUrlList.get(2).getPic());
         } else if (imgUrlList.size() == 1) {
             vh.setText(R.id.item_title, item.getTitle());
-            vh.setText(R.id.item_content, item.getSummary());
+            vh.setText(R.id.item_content, item.getContent());
             vh.setVisibility(R.id.article_top_layout);
             vh.setGone(R.id.layout_image);
         } else {
             vh.setVisibility(R.id.article_top_layout);
             vh.setGone(R.id.layout_image);
         }
-
-
     }
 
     @Override
-    protected int getLayoutId(int position, NewsEntity item) {
+    protected int getLayoutId(int position, NewBean.ZixunBean item) {
         return R.layout.item_list_news;
-    }
-
-    public void setSystemTime(String systemTime) {
-        this.systemTime = systemTime;
     }
 }

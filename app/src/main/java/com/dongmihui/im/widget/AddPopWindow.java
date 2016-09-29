@@ -67,7 +67,8 @@ public class AddPopWindow extends PopupWindow {
             public void onClick(View arg0) {
                 AddPopWindow.this.dismiss();
                 //Toast.makeText(ECApplication.getInstance(),"添加群",Toast.LENGTH_SHORT).show();
-                GroupsActivity.startGroupsActivity(context);
+//                GroupsActivity.startGroupsActivity(context,"group");
+                AddContactActivity.startAddContactActivity(context,"group");
             }  
         });  
   
@@ -78,7 +79,7 @@ public class AddPopWindow extends PopupWindow {
                 AddPopWindow.this.dismiss();
                 //Toast.makeText(ECApplication.getInstance(),"添加好友",Toast.LENGTH_SHORT).show();
 
-               AddContactActivity.startAddContactActivity(context);
+               AddContactActivity.startAddContactActivity(context,"contact");
             }  
         });  
     }  
