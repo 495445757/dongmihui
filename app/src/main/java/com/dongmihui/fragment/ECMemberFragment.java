@@ -1,6 +1,7 @@
 package com.dongmihui.fragment;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dongmihui.R;
 import com.dongmihui.activity.MemberEditorActivity;
 import com.dongmihui.activity.LoginActivity;
@@ -22,6 +24,7 @@ import com.dongmihui.activity.SettingActivity;
 import com.dongmihui.activity.UsAboutActivity;
 import com.dongmihui.api.MyApi;
 import com.dongmihui.bean.MemberBean;
+import com.dongmihui.common.AppContext;
 import com.dongmihui.utils.SpUtils;
 import com.dongmihui.utils.TLog;
 
@@ -76,6 +79,8 @@ public class ECMemberFragment extends Fragment {
     Button butQuit;
     private MyApi api;
     boolean isFirst =true;
+    private MemberBean body;
+
     public ECMemberFragment() {
         // Required empty public constructor
     }
@@ -93,23 +98,37 @@ public class ECMemberFragment extends Fragment {
         return view;
     }
     //联网获取用户信息 初始化用户信息
+    ProgressDialog pd;
     private void initView() {
+        if(pd==null){
+            pd= new ProgressDialog(getActivity());
+        }
+        pd.setCanceledOnTouchOutside(false);
+        pd.setMessage("加载中。。。");
+        pd.show();
         int anInt = SpUtils.getInt(getActivity(), SpUtils.USER_ID);
         api.getMember(3, new Callback<MemberBean>() {
             @Override
             public void onResponse(Call<MemberBean> call, Response<MemberBean> response) {
-                MemberBean body = response.body();
+                body = response.body();
                 if(body.getCode()==0){
-                    TLog.log("MmberFragment",body.toString()+"00000000000000000000");
+                    TLog.log("MmberFragment", body.toString()+"00000000000000000000");
+                    pd.dismiss();
                 }else if(body.getCode() == 1){
                     tvUserName.setText(body.result.getUserName());
-                    TLog.log("MmberFragment",body.toString()+"111111111111111111111111");
+                    Glide.with(AppContext.getInstance())
+                            .load(body.result.getAvatar())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(imAvatar);
+                    TLog.log("MmberFragment", body.toString()+"111111111111111111111111");
+                    pd.dismiss();
                 }
             }
 
             @Override
             public void onFailure(Call<MemberBean> call, Throwable t) {
-
+                TLog.log("MmberFragment",t.toString());
+                pd.dismiss();
             }
         });
     }
@@ -124,10 +143,9 @@ public class ECMemberFragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.im_avatar:
-                MemberEditorActivity.startMemberEditorActivity(getActivity(),tvUserName.getText().toString().trim());
-                break;
+
             case R.id.iv_next:
-                MemberEditorActivity.startMemberEditorActivity(getActivity(),tvUserName.getText().toString().trim());
+                MemberEditorActivity.startMemberEditorActivity(getActivity());
                 break;
             case R.id.ll_account_setting:
                 SettingActivity.startSettingActivity(getActivity());

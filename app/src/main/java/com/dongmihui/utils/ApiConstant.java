@@ -7,7 +7,7 @@ package com.dongmihui.utils;
 public interface ApiConstant {
 
 //    public static String url = "http://192.168.2.3/";
-    public static final String url = "http://www.cheng520.top/";
+    public static final String url = "http://dmh2.hnwxq.com/";
 
     /**
      * 验证邮箱激活码接口
@@ -58,4 +58,23 @@ public interface ApiConstant {
      * 我的界面的用户信息接口
      */
     public static String URL_MEMBER="app/index.php/Usercenter/userInfo";
+    /**
+     * 上传用户修改信息
+     */
+    public static String URL_ABOUTMEMBER="app/index.php/Usercenter/userEdit";
+    /**
+     * 上传用户头像
+     */
+
+    public static String URL_AVATAR ="app/index.php/Usercenter/avatar";
+    /**
+     * 修改密码
+     */
+
+    public static String URL_MODIFYPWD ="app/index.php/Usercenter/passWord";
+    /**
+     * 修改手机号码
+     */
+
+    public static String URL_MODIFYPHONE="app/index.php/Usercenter/phone";
 }

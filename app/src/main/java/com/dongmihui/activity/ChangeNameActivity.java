@@ -47,11 +47,11 @@ public class ChangeNameActivity extends Activity {
                 if(TextUtils.isEmpty(newName)){
                     ToastUtil.showShort(this,"名字不能为空！");
                 }else{
-                    Intent intent =new Intent(this,MemberEditorActivity.class);
+                    Intent intent = new Intent(ChangeNameActivity.this, MemberEditorActivity.class);
                     intent.putExtra("newName",newName);
-//                    startActivityForResult(intent,1000);
-                    finishActivity(1000);
-                   finish();
+
+                    setResult(1000,intent);
+                    finish();
                 }
 
                 break;

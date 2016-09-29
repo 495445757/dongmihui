@@ -1,9 +1,10 @@
 package com.dongmihui.bean;
 
+
 /**
  * Created by Android on 2016/9/28.
  */
-public class MemberBean {
+public class MemberBean  {
 
     /**
      * code : 1
@@ -61,6 +62,7 @@ public class MemberBean {
                 '}';
     }
 
+
     public static class ResultBean {
         public int id;
         public int jifen;
@@ -68,26 +70,18 @@ public class MemberBean {
         public String sex;
         public String jobs;
         public String avatar;
-        public String province;
-        public String city;
-        public String district;
+        public String home;
         public String desc;
 
         public String getAvatar() {
             return avatar;
         }
 
-        public String getCity() {
-            return city;
-        }
 
         public String getDesc() {
             return desc;
         }
 
-        public String getDistrict() {
-            return district;
-        }
 
         public int getId() {
             return id;
@@ -101,9 +95,6 @@ public class MemberBean {
             return jobs;
         }
 
-        public String getProvince() {
-            return province;
-        }
 
         public String getSex() {
             return sex;
@@ -117,17 +108,11 @@ public class MemberBean {
             this.avatar = avatar;
         }
 
-        public void setCity(String city) {
-            this.city = city;
-        }
 
         public void setDesc(String desc) {
             this.desc = desc;
         }
 
-        public void setDistrict(String district) {
-            this.district = district;
-        }
 
         public void setId(int id) {
             this.id = id;
@@ -141,9 +126,6 @@ public class MemberBean {
             this.jobs = jobs;
         }
 
-        public void setProvince(String province) {
-            this.province = province;
-        }
 
         public void setSex(String sex) {
             this.sex = sex;
@@ -151,6 +133,14 @@ public class MemberBean {
 
         public void setUserName(String userName) {
             this.userName = userName;
+        }
+
+        public String getHome() {
+            return home;
+        }
+
+        public void setHome(String home) {
+            this.home = home;
         }
     }
 }
