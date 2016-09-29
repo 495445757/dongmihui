@@ -2,13 +2,15 @@ package com.dongmihui.api;
 
 import com.dongmihui.bean.ApiMessage;
 import com.dongmihui.bean.ContactListBean;
-import com.dongmihui.bean.GroupListBean;
+import com.dongmihui.bean.GroupBean;
 import com.dongmihui.utils.ApiConstant;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -45,8 +47,8 @@ public class IMApi {
      * @param groupName
      * @param callBack
      */
-    public void getGroupList(String groupName, Callback<ApiMessage<GroupListBean>> callBack) {
-        Call<ApiMessage<GroupListBean>> groupList = server.getGroupList(groupName);
+    public void getGroupList(String groupName, Callback<ApiMessage<List<GroupBean>>> callBack) {
+        Call<ApiMessage<List<GroupBean>>> groupList = server.getGroupList(groupName);
         groupList.enqueue(callBack);
     }
 
@@ -60,4 +62,23 @@ public class IMApi {
         contactList.enqueue(callback);
     }
 
+    public Response<ApiMessage<List<ContactListBean>>> getContact(String imName) throws IOException {
+        Call<ApiMessage<List<ContactListBean>>> contactList = server.getContactList(imName);
+        return contactList.execute();
+    }
+
+    /**
+     * 获取User信息
+     * @param name
+     * @param callback
+     */
+    public void getUserInfo(String name, Callback<ApiMessage<ContactListBean>> callback) {
+        Call<ApiMessage<ContactListBean>> userInfo = server.getUserInfo(name);
+        userInfo.enqueue(callback);
+    }
+
+    public Response<ApiMessage<ContactListBean>> getUserInfo(String name) throws IOException {
+        Call<ApiMessage<ContactListBean>> userInfo = server.getUserInfo(name);
+        return userInfo.execute();
+    }
 }

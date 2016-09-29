@@ -25,9 +25,15 @@ import com.dongmihui.adapter.base.BaseListAdapter;
 import com.dongmihui.api.IMApi;
 import com.dongmihui.bean.ApiMessage;
 import com.dongmihui.bean.ContactListBean;
+import com.dongmihui.bean.GroupBean;
 import com.dongmihui.im.DemoHelper;
+import com.dongmihui.utils.ToastUtil;
+import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMGroup;
+import com.hyphenate.chat.EMGroupInfo;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
+import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.Date;
 import java.util.List;
@@ -48,12 +54,22 @@ public class AddContactActivity extends BaseActivity implements BaseListAdapter.
     private Button searchBtn;
     private String toAddUsername;
     private ProgressDialog progressDialog;
-    AddContactListAdapter adapter;
+    BaseListAdapter adapter;
     IMApi api;
 
-    public static void startAddContactActivity(Activity activity) {
+    public boolean isContact;
+
+    public static EMGroup searchedGroup;
+
+    /**
+     *
+     * @param activity
+     * @param from contact , group
+     */
+    public static void startAddContactActivity(Activity activity,String from) {
         if (activity != null) {
             Intent intent = new Intent(activity, AddContactActivity.class);
+            intent.putExtra("from", from);
             activity.startActivity(intent);
         }
     }
@@ -63,16 +79,31 @@ public class AddContactActivity extends BaseActivity implements BaseListAdapter.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.em_activity_add_contact);
         ButterKnife.bind(this);
+        String from = getIntent().getStringExtra("from");
+        if (TextUtils.equals(from, "group")) {
+            isContact = false;
+        }else {
+            isContact = true;
+        }
         TextView mTextView = (TextView) findViewById(R.id.add_list_friends);
         api = new IMApi();
         editText = (EditText) findViewById(R.id.edit_note);
-        String strAdd = getResources().getString(R.string.add_friend);
+        String strUserName="";
+        String strAdd ="";
+        if (isContact) {
+            strAdd = getResources().getString(R.string.add_friend);
+            strUserName = getResources().getString(R.string.user_name);
+        }else {
+            strAdd = "添加群组";
+            strUserName="群组名称";
+        }
         mTextView.setText(strAdd);
-        String strUserName = getResources().getString(R.string.user_name);
+
         editText.setHint(strUserName);
 //		searchedUserLayout = (RelativeLayout) findViewById(R.id.ll_user);
 //		nameText = (TextView) findViewById(R.id.name);
         searchBtn = (Button) findViewById(R.id.search);
+        searchedGroup = null;
     }
 
     public void initListView(List<ContactListBean> beans) {
@@ -80,11 +111,26 @@ public class AddContactActivity extends BaseActivity implements BaseListAdapter.
             adapter = new AddContactListAdapter(this);
             lvContactList.setAdapter(adapter);
         }
+        if (beans == null) {
+            new EaseAlertDialog(this,"无此人").show();
+            return;
+        }
         adapter.addItem(beans);
     }
 
+    public void initListViewFromGroup(List<GroupBean> beans) {
+        if (adapter == null) {
+            adapter = new AddGroupListAdapter(this);
+            lvContactList.setAdapter(adapter);
+        }
+        if (beans == null) {
+            new EaseAlertDialog(this,"无此人").show();
+            return;
+        }
+        adapter.addItem(beans);
+    }
     /**
-     * 搜索联系
+     * 搜索
      *
      * @param v
      */
@@ -95,36 +141,15 @@ public class AddContactActivity extends BaseActivity implements BaseListAdapter.
         if (getString(R.string.button_search).equals(saveText)) {
             toAddUsername = name;
             if (TextUtils.isEmpty(name)) {
-                new EaseAlertDialog(this, R.string.Please_enter_a_username).show();
+                new EaseAlertDialog(this,"输入不可为空").show();
                 return;
             }
 
-            progressDialog = new ProgressDialog(this);
-            String stri = "搜索中请稍候。。。";
-            progressDialog.setMessage(stri);
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
-
-            // TODO 你可以在这里搜索用户从您的应用程序服务器
-            api.getContactList(name, new Callback<ApiMessage<List<ContactListBean>>>() {
-                @Override
-                public void onResponse(Call<ApiMessage<List<ContactListBean>>> call, Response<ApiMessage<List<ContactListBean>>> response) {
-                    ApiMessage<List<ContactListBean>> body = response.body();
-                    if (body.getCode() == 0) {
-                        Toast.makeText(AddContactActivity.this, body.getMsg(), Toast.LENGTH_SHORT).show();
-                    } else if (body.getCode() == 1) {
-                        initListView(body.getResult());
-                    }
-                    Log.d("AddContactActivity", "body.getResult():" + body.getResult());
-                    progressDialog.dismiss();
-                }
-
-                @Override
-                public void onFailure(Call<ApiMessage<List<ContactListBean>>> call, Throwable t) {
-                    Log.d("AddContactActivity", t.toString());
-                    progressDialog.dismiss();
-                }
-            });
+            if (isContact) {
+                searchContact(name);
+            }else {
+                searchGroup(name);
+            }
 
 
 //            //如果用户存在，显示userame并添加按钮
@@ -132,6 +157,71 @@ public class AddContactActivity extends BaseActivity implements BaseListAdapter.
 //            nameText.setText(toAddUsername);
 
         }
+    }
+
+    public void searchContact(String name) {
+        progressDialog = new ProgressDialog(this);
+        String stri = "搜索中请稍候。。。";
+        progressDialog.setMessage(stri);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        // TODO 你可以在这里搜索用户从您的应用程序服务器
+        api.getContactList(name, new Callback<ApiMessage<List<ContactListBean>>>() {
+            @Override
+            public void onResponse(Call<ApiMessage<List<ContactListBean>>> call, Response<ApiMessage<List<ContactListBean>>> response) {
+                ApiMessage<List<ContactListBean>> body = response.body();
+                if (body.getCode() == 0) {
+                    Toast.makeText(AddContactActivity.this, body.getMsg(), Toast.LENGTH_SHORT).show();
+                } else if (body.getCode() == 1) {
+                    initListView(body.getResult());
+                }
+                Log.d("AddContactActivity", "body.getResult():" + body.getResult());
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ApiMessage<List<ContactListBean>>> call, Throwable t) {
+                Log.d("AddContactActivity", t.toString());
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * search group with group id
+     * @param
+     */
+    public void searchGroup(final String  groupName){
+        if(TextUtils.isEmpty(groupName.trim())){
+            return;
+        }
+
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage(getResources().getString(R.string.searching));
+        pd.setCancelable(false);
+        pd.show();
+
+        api.getGroupList(groupName.trim(), new Callback<ApiMessage<List<GroupBean>>>() {
+            @Override
+            public void onResponse(Call<ApiMessage<List<GroupBean>>> call, Response<ApiMessage<List<GroupBean>>> response) {
+                ApiMessage<List<GroupBean>> body = response.body();
+                if (body.getCode() == 0) {
+                    Toast.makeText(AddContactActivity.this, body.getMsg(), Toast.LENGTH_SHORT).show();
+                } else if (body.getCode() == 1) {
+                    initListViewFromGroup(body.getResult());
+                }
+                pd.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ApiMessage<List<GroupBean>>> call, Throwable t) {
+                Log.d("AddContactActivity", t.toString());
+                pd.dismiss();
+            }
+        });
+
+
     }
 
     /**
@@ -144,7 +234,7 @@ public class AddContactActivity extends BaseActivity implements BaseListAdapter.
             new EaseAlertDialog(this, R.string.not_add_myself).show();
             return;
         }
-
+        ToastUtil.ShortToast(imName);
         if (DemoHelper.getInstance().getContactList().containsKey(imName)) {
             //let the user know the contact already in your contact list
             if (EMClient.getInstance().contactManager().getBlackListUsernames().contains(imName)) {
@@ -206,6 +296,36 @@ public class AddContactActivity extends BaseActivity implements BaseListAdapter.
     public Date getSystemTime() {
         return new Date();
     }
+
+    public class AddGroupListAdapter extends BaseListAdapter<GroupBean> {
+        public AddGroupListAdapter(Callback callback) {
+            super(callback);
+        }
+
+        @Override
+        protected void convert(ViewHolder vh, final GroupBean item, int position) {
+            vh.setText(R.id.name,item.getGroupName());
+            vh.setImageForNet(R.id.avatar,item.getAvatar());
+            vh.setGone(R.id.indicator);
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EMGroupInfo info = new EMGroupInfo(item.getNumber(), item.getGroupName());
+                    GroupSimpleDetailActivity.startGroupSimpleDetailActivity(AddContactActivity.this, info);
+                    Log.d("AddGroupListAdapter", item.toString());
+                }
+            };
+            vh.setOnClick(R.id.ll_user, onClickListener);
+            vh.setOnClick(R.id.name,onClickListener);
+            vh.setOnClick(R.id.avatar,onClickListener);
+        }
+
+        @Override
+        protected int getLayoutId(int position, GroupBean item) {
+            return R.layout.add_contact_list_item;
+        }
+    }
+
 
     public class AddContactListAdapter extends BaseListAdapter<ContactListBean>{
 

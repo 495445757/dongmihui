@@ -1,7 +1,13 @@
 package com.dongmihui.im.parse;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
+import com.dongmihui.api.IMApi;
+import com.dongmihui.bean.ApiMessage;
+import com.dongmihui.bean.ContactListBean;
 import com.dongmihui.im.DemoHelper;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
@@ -20,6 +26,9 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ParseManager {
@@ -46,11 +55,12 @@ public class ParseManager {
 	public static ParseManager getInstance() {
 		return instance;
 	}
-
+	IMApi api;
 	public void onInit(Context context) {
 		Context appContext = context.getApplicationContext();
 		Parse.enableLocalDatastore(appContext);
 		Parse.initialize(context, ParseAppID, ParseClientKey);
+		api = new IMApi();
 //		Parse.initialize(new Parse.Configuration.Builder(appContext)
 //		        .applicationId(ParseAppID)
 //		        .server("http://114.215.141.221:1337/parse/")
@@ -92,6 +102,26 @@ public class ParseManager {
 		}
 		return false;
 	}
+
+//	public void getContactInfos(List<String> usernames, final EMValueCallBack<List<EaseUser>> callback){
+//		 api.getContact(EMClient.getInstance().getCurrentUser(), new Callback<ApiMessage<List<ContactListBean>>>() {
+//			 @Override
+//			 public void onResponse(Call<ApiMessage<List<ContactListBean>>> call, Response<ApiMessage<List<ContactListBean>>> response) {
+//                 ApiMessage<List<ContactListBean>> body = response.body();
+//                 if (body.getCode() == 1) {
+//                     for (ContactListBean bean: body.getResult()
+//                          ) {
+//
+//                     }
+//                 }
+//             }
+//
+//			 @Override
+//			 public void onFailure(Call<ApiMessage<List<ContactListBean>>> call, Throwable t) {
+//
+//			 }
+//		 });
+//	}
 
 	public void getContactInfos(List<String> usernames, final EMValueCallBack<List<EaseUser>> callback) {
 		ParseQuery<ParseObject> pQuery = ParseQuery.getQuery(CONFIG_TABLE_NAME);

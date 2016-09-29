@@ -211,6 +211,7 @@
         <activity android:name=".activity.UsAboutActivity" />
         <activity android:name=".activity.JobSetActivity" />
         <activity android:name=".activity.RegisterActivity"></activity>
+        <activity android:name=".im.activity.GroupSimpleDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -2,15 +2,13 @@ package com.dongmihui.api;
 
 import com.dongmihui.bean.ApiMessage;
 import com.dongmihui.bean.ContactListBean;
-import com.dongmihui.bean.GroupListBean;
+import com.dongmihui.bean.GroupBean;
 import com.dongmihui.utils.ApiConstant;
-import com.dongmihui.utils.StringUtils;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -23,8 +21,11 @@ public interface IMService {
     Call<ApiMessage<List<ContactListBean>>> getSearchContactList(@Query("name") String name);
 
     @GET(ApiConstant.URL_SEARCHGROUP)
-    Call<ApiMessage<GroupListBean>> getGroupList(@Query("name") String groupName);
+    Call<ApiMessage<List<GroupBean>>> getGroupList(@Query("name") String groupName);
 
     @GET(ApiConstant.URL_GET_FRIEND)
     Call<ApiMessage<List<ContactListBean>>> getContactList(@Query("name") String imName);
+
+    @GET(ApiConstant.URL_USER_INFO)
+    Call<ApiMessage<ContactListBean>> getUserInfo(@Query("userName")String imName);
 }
