@@ -125,7 +125,8 @@ public class GroupSimpleDetailActivity extends BaseActivity {
 			public void run() {
 				try {
 					//if group is membersOnly，you need apply to join
-					if(group.isMembersOnly()){
+                    Log.d("GroupSimpleDetailActivi", groupid);
+                    if(group.isMembersOnly()){
 					    EMClient.getInstance().groupManager().applyJoinToGroup(groupid, st2);
 					}else{
 					    EMClient.getInstance().groupManager().joinGroup(groupid);

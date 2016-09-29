@@ -103,118 +103,164 @@ public class ParseManager {
 		return false;
 	}
 
-//	public void getContactInfos(List<String> usernames, final EMValueCallBack<List<EaseUser>> callback){
-//		 api.getContact(EMClient.getInstance().getCurrentUser(), new Callback<ApiMessage<List<ContactListBean>>>() {
-//			 @Override
-//			 public void onResponse(Call<ApiMessage<List<ContactListBean>>> call, Response<ApiMessage<List<ContactListBean>>> response) {
-//                 ApiMessage<List<ContactListBean>> body = response.body();
-//                 if (body.getCode() == 1) {
-//                     for (ContactListBean bean: body.getResult()
-//                          ) {
-//
-//                     }
-//                 }
-//             }
-//
-//			 @Override
-//			 public void onFailure(Call<ApiMessage<List<ContactListBean>>> call, Throwable t) {
-//
-//			 }
-//		 });
-//	}
+	public void getContactInfos(List<String> usernames, final EMValueCallBack<List<EaseUser>> callback){
+		 api.getContact(EMClient.getInstance().getCurrentUser(), new Callback<ApiMessage<List<ContactListBean>>>() {
+			 @Override
+			 public void onResponse(Call<ApiMessage<List<ContactListBean>>> call, Response<ApiMessage<List<ContactListBean>>> response) {
+                 ApiMessage<List<ContactListBean>> body = response.body();
+                 if (body.getCode() == 1) {
+                     List<EaseUser> mList = new ArrayList<EaseUser>();
+                     for (ContactListBean bean: body.getResult()
+                          ) {
+                         EaseUser user = new EaseUser(bean.getUserName());
+                         user.setAvatar(bean.getAvatar());
+                         user.setNickname(bean.getNickName());
+                         EaseCommonUtils.setUserInitialLetter(user);
+                         EaseCommonUtils.setUserInitialLetter(user);
+                         mList.add(user);
+                     }
+                     callback.onSuccess(mList);
+                 }
+             }
 
-	public void getContactInfos(List<String> usernames, final EMValueCallBack<List<EaseUser>> callback) {
-		ParseQuery<ParseObject> pQuery = ParseQuery.getQuery(CONFIG_TABLE_NAME);
-		pQuery.whereContainedIn(CONFIG_USERNAME, usernames);
-		pQuery.findInBackground(new FindCallback<ParseObject>() {
-
-			@Override
-			public void done(List<ParseObject> arg0, ParseException arg1) {
-				if (arg0 != null) {
-					List<EaseUser> mList = new ArrayList<EaseUser>();
-					for (ParseObject pObject : arg0) {
-					    EaseUser user = new EaseUser(pObject.getString(CONFIG_USERNAME));
-						ParseFile parseFile = pObject.getParseFile(CONFIG_AVATAR);
-						if (parseFile != null) {
-							user.setAvatar(parseFile.getUrl());
-						}
-						user.setNick(pObject.getString(CONFIG_NICK));
-						EaseCommonUtils.setUserInitialLetter(user);
-						mList.add(user);
-					}
-					callback.onSuccess(mList);
-				} else {
-					callback.onError(arg1.getCode(), arg1.getMessage());
-				}
-			}
-		});
+			 @Override
+			 public void onFailure(Call<ApiMessage<List<ContactListBean>>> call, Throwable t) {
+                callback.onError(t.hashCode(),t.toString());
+			 }
+		 });
 	}
+
+//	public void getContactInfos(List<String> usernames, final EMValueCallBack<List<EaseUser>> callback) {
+//		ParseQuery<ParseObject> pQuery = ParseQuery.getQuery(CONFIG_TABLE_NAME);
+//		pQuery.whereContainedIn(CONFIG_USERNAME, usernames);
+//		pQuery.findInBackground(new FindCallback<ParseObject>() {
+//
+//			@Override
+//			public void done(List<ParseObject> arg0, ParseException arg1) {
+//				if (arg0 != null) {
+//					List<EaseUser> mList = new ArrayList<EaseUser>();
+//					for (ParseObject pObject : arg0) {
+//					    EaseUser user = new EaseUser(pObject.getString(CONFIG_USERNAME));
+//						ParseFile parseFile = pObject.getParseFile(CONFIG_AVATAR);
+//						if (parseFile != null) {
+//							user.setAvatar(parseFile.getUrl());
+//						}
+//						user.setNick(pObject.getString(CONFIG_NICK));
+//						EaseCommonUtils.setUserInitialLetter(user);
+//						mList.add(user);
+//					}
+//					callback.onSuccess(mList);
+//				} else {
+//					callback.onError(arg1.getCode(), arg1.getMessage());
+//				}
+//			}
+//		});
+//	}
 
 	
 	public void asyncGetCurrentUserInfo(final EMValueCallBack<EaseUser> callback){
 		final String username = EMClient.getInstance().getCurrentUser();
-		asyncGetUserInfo(username, new EMValueCallBack<EaseUser>() {
 
-			@Override
-			public void onSuccess(EaseUser value) {
-				callback.onSuccess(value);
-			}
+        api.getUserInfo(username, new Callback<ApiMessage<ContactListBean>>() {
+            @Override
+            public void onResponse(Call<ApiMessage<ContactListBean>> call, Response<ApiMessage<ContactListBean>> response) {
+                ApiMessage<ContactListBean> body = response.body();
+                if (body.getCode() == 1) {
+                    ContactListBean result = body.getResult();
+                    EaseUser user = new EaseUser(result.getUserName());
+                    user.setAvatar(result.getAvatar());
+                    user.setNickname(result.getNickName());
+                    callback.onSuccess(user);
+                }
+            }
 
-			@Override
-			public void onError(int error, String errorMsg) {
-				if (error == ParseException.OBJECT_NOT_FOUND) {
-					ParseObject pUser = new ParseObject(CONFIG_TABLE_NAME);
-					pUser.put(CONFIG_USERNAME, username);
-					pUser.saveInBackground(new SaveCallback() {
-						
-						@Override
-						public void done(ParseException arg0) {
-							if(arg0==null){
-								callback.onSuccess(new EaseUser(username));
-							}
-						}
-					});
-				}else{
-					callback.onError(error, errorMsg);
-				}
-			}
-		});
+            @Override
+            public void onFailure(Call<ApiMessage<ContactListBean>> call, Throwable t) {
+                callback.onError(t.hashCode(),t.toString());
+            }
+        });
+
+//		asyncGetUserInfo(username, new EMValueCallBack<EaseUser>() {
+//
+//			@Override
+//			public void onSuccess(EaseUser value) {
+//				callback.onSuccess(value);
+//			}
+//
+//			@Override
+//			public void onError(int error, String errorMsg) {
+//				if (error == ParseException.OBJECT_NOT_FOUND) {
+//					ParseObject pUser = new ParseObject(CONFIG_TABLE_NAME);
+//					pUser.put(CONFIG_USERNAME, username);
+//					pUser.saveInBackground(new SaveCallback() {
+//
+//						@Override
+//						public void done(ParseException arg0) {
+//							if(arg0==null){
+//								callback.onSuccess(new EaseUser(username));
+//							}
+//						}
+//					});
+//				}else{
+//					callback.onError(error, errorMsg);
+//				}
+//			}
+//		});
 	}
+
 	
 	public void asyncGetUserInfo(final String username, final EMValueCallBack<EaseUser> callback){
-		ParseQuery<ParseObject> pQuery = ParseQuery.getQuery(CONFIG_TABLE_NAME);
-		pQuery.whereEqualTo(CONFIG_USERNAME, username);
-		pQuery.getFirstInBackground(new GetCallback<ParseObject>() {
-			
-			@Override
-			public void done(ParseObject pUser, ParseException e) {
-				if(pUser!=null){
-					String nick = pUser.getString(CONFIG_NICK);
-					ParseFile pFile = pUser.getParseFile(CONFIG_AVATAR);
-					if(callback!=null){
-					    EaseUser user = DemoHelper.getInstance().getContactList().get(username);
-						if(user!=null){
-							user.setNick(nick);
-							if (pFile != null && pFile.getUrl() != null) {
-								user.setAvatar(pFile.getUrl());
-							}
-						}else{
-						    user = new EaseUser(username);
-						    user.setNick(nick);
-						    if (pFile != null && pFile.getUrl() != null) {
-                                user.setAvatar(pFile.getUrl());
-                            }
-						}
-						callback.onSuccess(user);
-					}
-				}else{
-					if(callback!=null){
-						callback.onError(e.getCode(), e.getMessage());
-					}
-				}
-				
-			}
-		});
+        api.getUserInfo(username, new Callback<ApiMessage<ContactListBean>>() {
+            @Override
+            public void onResponse(Call<ApiMessage<ContactListBean>> call, Response<ApiMessage<ContactListBean>> response) {
+                ApiMessage<ContactListBean> body = response.body();
+                if (body.getCode() == 1) {
+                    ContactListBean result = body.getResult();
+                    EaseUser user = new EaseUser(result.getUserName());
+                    user.setAvatar(result.getAvatar());
+                    user.setNickname(result.getNickName());
+                    callback.onSuccess(user);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiMessage<ContactListBean>> call, Throwable t) {
+                callback.onError(t.hashCode(),t.toString());
+            }
+        });
+//		ParseQuery<ParseObject> pQuery = ParseQuery.getQuery(CONFIG_TABLE_NAME);
+//		pQuery.whereEqualTo(CONFIG_USERNAME, username);
+//		pQuery.getFirstInBackground(new GetCallback<ParseObject>() {
+//
+//			@Override
+//			public void done(ParseObject pUser, ParseException e) {
+//				if(pUser!=null){
+//					String nick = pUser.getString(CONFIG_NICK);
+//					ParseFile pFile = pUser.getParseFile(CONFIG_AVATAR);
+//					if(callback!=null){
+//					    EaseUser user = DemoHelper.getInstance().getContactList().get(username);
+//						if(user!=null){
+//							user.setNick(nick);
+//							if (pFile != null && pFile.getUrl() != null) {
+//								user.setAvatar(pFile.getUrl());
+//							}
+//						}else{
+//						    user = new EaseUser(username);
+//						    user.setNick(nick);
+//						    if (pFile != null && pFile.getUrl() != null) {
+//                                user.setAvatar(pFile.getUrl());
+//                            }
+//						}
+//						callback.onSuccess(user);
+//					}
+//				}else{
+//					if(callback!=null){
+//						callback.onError(e.getCode(), e.getMessage());
+//					}
+//				}
+//
+//			}
+//		});
 	}
 
 	public String uploadParseAvatar(byte[] data) {

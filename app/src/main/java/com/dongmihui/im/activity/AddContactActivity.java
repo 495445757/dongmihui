@@ -229,7 +229,7 @@ public class AddContactActivity extends BaseActivity implements BaseListAdapter.
      *
      * @param imName
      */
-    public void addContact(String imName) {
+    public void addContact(final String imName) {
         if (EMClient.getInstance().getCurrentUser().equals(imName)) {
             new EaseAlertDialog(this, R.string.not_add_myself).show();
             return;
@@ -257,7 +257,7 @@ public class AddContactActivity extends BaseActivity implements BaseListAdapter.
                 try {
                     //demo use a hardcode reason here, you need let user to input if you like
                     String s = getResources().getString(R.string.Add_a_friend);
-                    EMClient.getInstance().contactManager().addContact(toAddUsername, s);
+                    EMClient.getInstance().contactManager().addContact(imName, s);
                     runOnUiThread(new Runnable() {
                         public void run() {
                             progressDialog.dismiss();
