@@ -9,6 +9,8 @@ import com.dongmihui.api.IMApi;
 import com.dongmihui.bean.ApiMessage;
 import com.dongmihui.bean.ContactListBean;
 import com.dongmihui.im.DemoHelper;
+import com.dongmihui.im.utils.PreferenceManager;
+import com.dongmihui.utils.SpUtils;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.EaseUser;
@@ -34,9 +36,9 @@ import retrofit2.Response;
 public class ParseManager {
 
 	private static final String TAG = ParseManager.class.getSimpleName();
-	
-	private static final String ParseAppID = "UUL8TxlHwKj7ZXEUr2brF3ydOxirCXdIj9LscvJs";
-	private static final String ParseClientKey = "B1jH9bmxuYyTcpoFfpeVslhmLYsytWTxqYqKQhBJ";
+//
+//	private static final String ParseAppID = "UUL8TxlHwKj7ZXEUr2brF3ydOxirCXdIj9LscvJs";
+//	private static final String ParseClientKey = "B1jH9bmxuYyTcpoFfpeVslhmLYsytWTxqYqKQhBJ";
 	
 //	private static final String ParseAppID = "task";
 //	private static final String ParseClientKey = "123456789";
@@ -58,8 +60,8 @@ public class ParseManager {
 	IMApi api;
 	public void onInit(Context context) {
 		Context appContext = context.getApplicationContext();
-		Parse.enableLocalDatastore(appContext);
-		Parse.initialize(context, ParseAppID, ParseClientKey);
+//		Parse.enableLocalDatastore(appContext);
+//		Parse.initialize(context, ParseAppID, ParseClientKey);
 		api = new IMApi();
 //		Parse.initialize(new Parse.Configuration.Builder(appContext)
 //		        .applicationId(ParseAppID)
@@ -169,7 +171,7 @@ public class ParseManager {
                     ContactListBean result = body.getResult();
                     EaseUser user = new EaseUser(result.getUserName());
                     user.setAvatar(result.getAvatar());
-                    user.setNickname(result.getNickName());
+                    user.setNick(result.getNickName());
                     callback.onSuccess(user);
                 }
             }
@@ -264,42 +266,42 @@ public class ParseManager {
 	}
 
 	public String uploadParseAvatar(byte[] data) {
-		String username = EMClient.getInstance().getCurrentUser();
-		ParseQuery<ParseObject> pQuery = ParseQuery.getQuery(CONFIG_TABLE_NAME);
-		pQuery.whereEqualTo(CONFIG_USERNAME, username);
-		ParseObject pUser = null;
-		try {
-			pUser = pQuery.getFirst();
-			if (pUser == null) {
-				pUser = new ParseObject(CONFIG_TABLE_NAME);
-				pUser.put(CONFIG_USERNAME, username);
-			}
-			ParseFile pFile = new ParseFile(data);
-			pUser.put(CONFIG_AVATAR, pFile);
-			pUser.save();
-			return pFile.getUrl();
-		} catch (ParseException e) {
-			if (e.getCode() == ParseException.OBJECT_NOT_FOUND) {
-				try {
-					pUser = new ParseObject(CONFIG_TABLE_NAME);
-					pUser.put(CONFIG_USERNAME, username);
-					ParseFile pFile = new ParseFile(data);
-					pUser.put(CONFIG_AVATAR, pFile);
-					pUser.save();
-					return pFile.getUrl();
-				} catch (ParseException e1) {
-					e1.printStackTrace();
-					EMLog.e(TAG, "parse error " + e1.getMessage());
-				}
-			} else {
-				e.printStackTrace();
-				EMLog.e(TAG, "parse error " + e.getMessage());
-			}
-		} catch(Exception e) {
-			EMLog.e(TAG, "uploadParseAvatar error");
-			e.printStackTrace();
-		}
-		return null;
+//		String username = EMClient.getInstance().getCurrentUser();
+//		ParseQuery<ParseObject> pQuery = ParseQuery.getQuery(CONFIG_TABLE_NAME);
+//		pQuery.whereEqualTo(CONFIG_USERNAME, username);
+//		ParseObject pUser = null;
+//		try {
+//			pUser = pQuery.getFirst();
+//			if (pUser == null) {
+//				pUser = new ParseObject(CONFIG_TABLE_NAME);
+//				pUser.put(CONFIG_USERNAME, username);
+//			}
+//			ParseFile pFile = new ParseFile(data);
+//			pUser.put(CONFIG_AVATAR, pFile);
+//			pUser.save();
+//			return pFile.getUrl();
+//		} catch (ParseException e) {
+//			if (e.getCode() == ParseException.OBJECT_NOT_FOUND) {
+//				try {
+//					pUser = new ParseObject(CONFIG_TABLE_NAME);
+//					pUser.put(CONFIG_USERNAME, username);
+//					ParseFile pFile = new ParseFile(data);
+//					pUser.put(CONFIG_AVATAR, pFile);
+//					pUser.save();
+//					return pFile.getUrl();
+//				} catch (ParseException e1) {
+//					e1.printStackTrace();
+//					EMLog.e(TAG, "parse error " + e1.getMessage());
+//				}
+//			} else {
+//				e.printStackTrace();
+//				EMLog.e(TAG, "parse error " + e.getMessage());
+//			}
+//		} catch(Exception e) {
+//			EMLog.e(TAG, "uploadParseAvatar error");
+//			e.printStackTrace();
+//		}
+		return PreferenceManager.getInstance().getCurrentUserAvatar();
 	}
 
 }
