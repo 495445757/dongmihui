@@ -127,8 +127,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
             Map<String, EaseUser> contactList = DemoHelper.getInstance().getContactList();
             EaseUser user = contactList.get(toChatUsername);
-            Log.d(TAG, "avtart:"+user.getAvatar());
-            if (!TextUtils.isEmpty(user.getNickname())) {
+            if (user !=null && !TextUtils.isEmpty(user.getNickname())) {
                 titleBar.setTitle(user.getNickname());
             }else {
                 api.getUserInfo(toChatUsername, new Callback<ApiMessage<ContactListBean>>() {

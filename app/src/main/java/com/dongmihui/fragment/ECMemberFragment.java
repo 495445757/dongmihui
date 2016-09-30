@@ -26,9 +26,11 @@ import com.dongmihui.activity.UsAboutActivity;
 import com.dongmihui.api.MyApi;
 import com.dongmihui.bean.MemberBean;
 import com.dongmihui.common.AppContext;
+import com.dongmihui.utils.GlideCircleTransform;
 import com.dongmihui.utils.SpUtils;
 import com.dongmihui.utils.TLog;
 import com.dongmihui.im.DemoHelper;
+import com.dongmihui.utils.ToastUtil;
 import com.hyphenate.EMCallBack;
 
 
@@ -116,15 +118,16 @@ public class ECMemberFragment extends Fragment {
             public void onResponse(Call<MemberBean> call, Response<MemberBean> response) {
                 MemberBean body = response.body();
                 if(body.getCode()==0){
-                    TLog.log("MmberFragment", body.toString()+"00000000000000000000");
+                    ToastUtil.showShort(AppContext.getInstance(),"网络异常");
                     pd.dismiss();
                 }else if(body.getCode() == 1){
                     tvUserName.setText(body.result.getUserName());
                     Glide.with(AppContext.getInstance())
                             .load(body.result.getAvatar())
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .error(R.drawable.im_member_head)
+                            .transform(new GlideCircleTransform(AppContext.getInstance()))
                             .into(imAvatar);
-                    TLog.log("MmberFragment", body.toString()+"111111111111111111111111");
                     pd.dismiss();
                 }
             }
