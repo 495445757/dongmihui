@@ -9,6 +9,8 @@ import com.dongmihui.api.IMApi;
 import com.dongmihui.bean.ApiMessage;
 import com.dongmihui.bean.ContactListBean;
 import com.dongmihui.im.DemoHelper;
+import com.dongmihui.im.utils.PreferenceManager;
+import com.dongmihui.utils.SpUtils;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.domain.EaseUser;
@@ -169,7 +171,7 @@ public class ParseManager {
                     ContactListBean result = body.getResult();
                     EaseUser user = new EaseUser(result.getUserName());
                     user.setAvatar(result.getAvatar());
-                    user.setNickname(result.getNickName());
+                    user.setNick(result.getNickName());
                     callback.onSuccess(user);
                 }
             }
@@ -299,7 +301,7 @@ public class ParseManager {
 //			EMLog.e(TAG, "uploadParseAvatar error");
 //			e.printStackTrace();
 //		}
-		return null;
+		return PreferenceManager.getInstance().getCurrentUserAvatar();
 	}
 
 }

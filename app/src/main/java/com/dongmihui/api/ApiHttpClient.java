@@ -17,8 +17,8 @@ import cz.msebera.android.httpclient.client.params.ClientPNames;
 
 public class ApiHttpClient {
 
-    public final static String HOST = "www.cheng520.top";
-    private static String API_URL = ApiConstant.url+"%s";
+    public final static String HOST = "www.henanxinlong.com";
+    private static String API_URL = "http://www.henanxinlong.com/%s";
     public static final String DELETE = "DELETE";
     public static final String GET = "GET";
     public static final String POST = "POST";

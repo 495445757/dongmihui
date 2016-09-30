@@ -86,6 +86,8 @@ public class MainActivity extends BaseFragmentActivity  implements
     }
 
     public void initView() {
+
+        DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         // mAddBt.setOnClickListener(this);
         initTabs();

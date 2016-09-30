@@ -102,7 +102,7 @@ public class ECHomeFragment extends BaseFragment implements
             mList.add(channelItem);
         }
         array = new ArrayList<GridView>();
-        final int PageCount = 2;
+        final int PageCount = 1;
         for (int i = 0; i < PageCount; i++) {
             GridView appPage = new GridView(getActivity());
             appPage.setAdapter(new HomefragmentAdapter(getActivity(), mList, i));
@@ -174,7 +174,7 @@ public class ECHomeFragment extends BaseFragment implements
         initCh();
         myviewpager.setAdapter(new HomefragmentViewPagerAdapter(getActivity(), array));
         indicator.setViewPager(myviewpager);
-
+        indicator.setVisibility(View.GONE);
         mBanner.setAdapter(new BGABanner.Adapter() {
             @Override
             public void fillBannerItem(BGABanner banner, View view, Object model, int position) {

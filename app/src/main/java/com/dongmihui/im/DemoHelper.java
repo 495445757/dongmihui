@@ -393,9 +393,9 @@ public class DemoHelper {
             @Override
             public void onDisconnected(int error) {
                 if (error == EMError.USER_REMOVED) {
-                   // onCurrentAccountRemoved(); //TODO 账户被删除
+                    onCurrentAccountRemoved(); //TODO 账户被删除
                 } else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
-                    //onConnectionConflict();    //TODO 账户别处登陆
+                    onConnectionConflict();    //TODO 账户别处登陆
                 }
             }
 
@@ -709,7 +709,7 @@ public class DemoHelper {
      * 用户已登录到另一个设备
      */
     protected void onConnectionConflict(){
-        Intent intent = new Intent(appContext, MainActivity.class);
+        Intent intent = new Intent(appContext, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(Constant.ACCOUNT_CONFLICT, true);
         appContext.startActivity(intent);
@@ -719,7 +719,7 @@ public class DemoHelper {
      *帐户被删除
      */
     protected void onCurrentAccountRemoved(){
-        Intent intent = new Intent(appContext, MainActivity.class);
+        Intent intent = new Intent(appContext, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(Constant.ACCOUNT_REMOVED, true);
         appContext.startActivity(intent);
