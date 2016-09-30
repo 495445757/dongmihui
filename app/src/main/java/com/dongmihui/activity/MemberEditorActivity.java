@@ -38,7 +38,6 @@ import com.dongmihui.bean.MemberBean;
 import com.dongmihui.bean.ProvinceBean;
 import com.dongmihui.common.AppContext;
 import com.dongmihui.im.DemoHelper;
-import com.dongmihui.im.DemoModel;
 import com.dongmihui.im.activity.BaseActivity;
 import com.dongmihui.im.utils.PreferenceManager;
 import com.dongmihui.utils.JsonFileReader;
@@ -253,19 +252,19 @@ public class MemberEditorActivity extends BaseActivity {
             public void onResponse(Call<MemberBean> call, Response<MemberBean> response) {
                 MemberBean body = response.body();
                 if (body.getCode() == 0) {
-                    TLog.log("MmberFragment", body.toString() + "00000000000000000000");
+                    ToastUtil.showShort(AppContext.getInstance(),"网络异常");
                     pd.dismiss();
                 } else if (body.getCode() == 1) {
                     tvUserName.setText(body.result.getUserName());
                     tvUserSex.setText(body.result.getSex());
                     tvUserJob.setText(body.result.getJobs());
                     tvUserCity.setText(body.result.home);
-                    ToastUtil.showShort(AppContext.getInstance(),tvUserCity.toString());
                     tvUserBrief.setText(body.result.getDesc());
                     avatar = body.result.getAvatar();
                     Glide.with(AppContext.getInstance())
                             .load(body.result.getAvatar())
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .error(R.drawable.im_member_head)
                             .into(imAvatar);
                     pd.dismiss();
                 }
@@ -273,6 +272,7 @@ public class MemberEditorActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<MemberBean> call, Throwable t) {
+                ToastUtil.showShort(AppContext.getInstance(),"网络异常");
                 pd.dismiss();
             }
         });
@@ -319,18 +319,19 @@ public class MemberEditorActivity extends BaseActivity {
                             ApiMessage<List<String>> avatarBody = response.body();
                             if(response.body().getCode()==1){
                                 avatar=avatarBody.getResult().get(0);
+                                ToastUtil.showShort(AppContext.getInstance(),"头像修改完成");
                                 //将头像存入本地
                                 PreferenceManager.getInstance().setCurrentUserAvatar(avatar);
                                 //通知更新
                                 DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
                             }
-                            ToastUtil.showShort(AppContext.getInstance(), avatarBody.getResult().get(0));
+
 
                         }
 
                         @Override
                         public void onFailure(Call<ApiMessage<List<String>>> call, Throwable t) {
-                            ToastUtil.showShort(AppContext.getInstance(),t.toString());
+                            ToastUtil.showShort(AppContext.getInstance(),"头像修改失败");
                         }
                     });
                     Bitmap bitMap = BitmapFactory.decodeFile(cropImagePath);
@@ -374,6 +375,7 @@ public class MemberEditorActivity extends BaseActivity {
                 break;
             case R.id.btn_update:
                 update();
+
                 break;
         }
     }
@@ -394,7 +396,7 @@ public class MemberEditorActivity extends BaseActivity {
         String job = tvUserJob.getText().toString();
         String city = tvUserCity.getText().toString();
 
-        ToastUtil.showShort(AppContext.getInstance(),city);
+
 
         String desc =tvUserBrief.getText().toString();
 
@@ -402,9 +404,10 @@ public class MemberEditorActivity extends BaseActivity {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         String body = response.body();
-                        ToastUtil.showShort(AppContext.getInstance(),"完成:"+body);
+                        ToastUtil.showShort(AppContext.getInstance(),"修改完成");
                         DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
                         pd.dismiss();
+                        finish();
 //                        ToastUtil.showShort(AppContext.getInstance(),body.getCode());
 //                        if(body.getCode()==0){
 //                            ToastUtil.showShort(AppContext.getInstance(),"失败");
@@ -417,8 +420,7 @@ public class MemberEditorActivity extends BaseActivity {
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-                        ToastUtil.showShort(AppContext.getInstance(),t.toString());
-
+                        ToastUtil.showShort(AppContext.getInstance(),"修改失败");
                         pd.dismiss();
                     }
                 });
@@ -463,7 +465,7 @@ public class MemberEditorActivity extends BaseActivity {
         popupWindow.setOutsideTouchable(true);
         View parent = LayoutInflater.from(this).inflate(R.layout.activity_main, null);
         popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
-        //popupWindow在弹窗的时候背景半透明
+        //popupWindow在弹窗的时候背景全透明
         final WindowManager.LayoutParams params = getWindow().getAttributes();
         params.alpha = 1f;
         getWindow().setAttributes(params);
@@ -544,7 +546,7 @@ public class MemberEditorActivity extends BaseActivity {
      */
     public void gotoClipActivity(Uri uri) {
         if (uri == null) {
-            ToastUtil.showShort(this, "meijinqu");
+
             TLog.log("uri" + "++++++++++++++");
             return;
         }

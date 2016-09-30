@@ -185,7 +185,6 @@ public class ECMemberFragment extends Fragment {
                 toast("版本升级");
                 break;
             case R.id.ll_about_us:
-
                 UsAboutActivity.startUsAboutActivity(getActivity());
                 break;
             case R.id.ll_feedback:

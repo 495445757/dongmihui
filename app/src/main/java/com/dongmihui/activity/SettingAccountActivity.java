@@ -99,6 +99,7 @@ public class SettingAccountActivity extends Activity {
         }
     };
 
+
     public static void startSettingAccountActivity(Activity activity) {
         if (activity != null) {
             Intent intent = new Intent(activity, SettingAccountActivity.class);
@@ -111,14 +112,10 @@ public class SettingAccountActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_info);
         api = new MyApi();
-        initListener();
         ButterKnife.bind(this);
-
     }
 
-    private void initListener() {
 
-    }
 
     @OnClick({R.id.tv_modfiyphone, R.id.tv_modfiypwd, R.id.im_GetCode, R.id.btn_ok, R.id.back, R.id.btn_ok_pwd})
     public void onClick(View view) {
@@ -131,8 +128,7 @@ public class SettingAccountActivity extends Activity {
                 break;
             case R.id.im_GetCode:
                 getVerifyCode();
-                setCode();
-                imGetCode.setEnabled(false);
+
                 break;
             case R.id.back:
                 finish();
@@ -159,12 +155,20 @@ public class SettingAccountActivity extends Activity {
     public void getVerifyCode() {
         phoneNumber = phone.getText().toString().trim();
         if(!TextUtils.isEmpty(phoneNumber)){
-            int anInt = SpUtils.getInt(this, SpUtils.USER_ID);
-            api.getVerifyCode(phoneNumber, anInt, new Callback<ApiMessage>() {
+            api.getVerifyCode(phoneNumber,3, new Callback<ApiMessage>() {
                 @Override
                 public void onResponse(Call<ApiMessage> call, Response<ApiMessage> response) {
+
                     verifyBody = response.body();
-                    ToastUtil.showShort(AppContext.getInstance(), verifyBody.toString());
+                    if(verifyBody.getCode()==0){
+                        ToastUtil.showShort(AppContext.getInstance(), verifyBody.getMsg().toString());
+                    }else if(verifyBody.getCode()==1){
+                        ToastUtil.showShort(AppContext.getInstance(), verifyBody.getMsg().toString());
+                        setCode();
+                        imGetCode.setEnabled(false);
+                    }
+
+
 //                    if(verifyBody.getCode()==0){
 //                        ToastUtil.showShort(AppContext.getInstance(), "返回失败");
 //                    }else if(verifyBody.getCode()==1){
@@ -185,14 +189,15 @@ public class SettingAccountActivity extends Activity {
     private void modifyPhone() {
         String verify = code.getText().toString().trim();
         if(!TextUtils.isEmpty(verify)){
-            api.setModifyPhone(4, phoneNumber, verify, new Callback<ApiMessage>() {
+          int  anInt = SpUtils.getInt(this, SpUtils.USER_ID);
+            api.setModifyPhone(anInt, phoneNumber, verify, new Callback<ApiMessage>() {
                 @Override
                 public void onResponse(Call<ApiMessage> call, Response<ApiMessage> response) {
                     ApiMessage phoneBody = response.body();
                     if(phoneBody.getCode()==0){
-                        ToastUtil.showShort(AppContext.getInstance(), "返回失败");
+                        ToastUtil.showShort(AppContext.getInstance(), phoneBody.getMsg().toString());
                     }else if(phoneBody.getCode()==1){
-                        ToastUtil.showShort(AppContext.getInstance(), "返回成功");
+                        ToastUtil.showShort(AppContext.getInstance(), phoneBody.getMsg().toString());
                     }
                 }
 
@@ -212,15 +217,15 @@ public class SettingAccountActivity extends Activity {
         String newPwd = putNewpwd.getText().toString().trim();
         String rePwd = putOnceNewpwd.getText().toString().trim();
         if (!TextUtils.isEmpty(oldpwd) && !TextUtils.isEmpty(newPwd) && !TextUtils.isEmpty(rePwd)) {
-            api.modifyPwd(4, oldpwd, newPwd, rePwd, new Callback<ApiMessage>() {
+            int  anInt = SpUtils.getInt(this, SpUtils.USER_ID);
+            api.modifyPwd(anInt, oldpwd, newPwd, rePwd, new Callback<ApiMessage>() {
                 @Override
                 public void onResponse(Call<ApiMessage> call, Response<ApiMessage> response) {
                     ApiMessage body = response.body();
-                    ToastUtil.showShort(AppContext.getInstance(), body.getMsg().toString());
                     if(body.getCode()==0){
-                        ToastUtil.showShort(AppContext.getInstance(), "修改密码失败！");
+                        ToastUtil.showShort(AppContext.getInstance(), body.getMsg().toString());
                     }else if(body.getCode()==1){
-                        ToastUtil.showShort(AppContext.getInstance(), "密码修改成功");
+                        ToastUtil.showShort(AppContext.getInstance(), body.getMsg().toString());
                     }
                 }
 
