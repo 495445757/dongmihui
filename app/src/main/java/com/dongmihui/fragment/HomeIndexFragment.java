@@ -40,7 +40,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import cn.bingoogolapple.bgabanner.BGABanner;
 import cz.msebera.android.httpclient.Header;
 
-public class HomeIndexFragment extends BaseListFragment<NewsEntity> implements
+public class  HomeIndexFragment extends BaseListFragment<NewsEntity> implements
         BGABanner.OnItemClickListener,
         BGABanner.Adapter {
     public static final String NEWS_SYSTEM_TIME = "news_system_time";

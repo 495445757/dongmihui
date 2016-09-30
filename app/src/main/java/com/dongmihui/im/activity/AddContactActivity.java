@@ -115,6 +115,7 @@ public class AddContactActivity extends BaseActivity implements BaseListAdapter.
             new EaseAlertDialog(this,"无此人").show();
             return;
         }
+        adapter.clear();
         adapter.addItem(beans);
     }
 
@@ -127,6 +128,7 @@ public class AddContactActivity extends BaseActivity implements BaseListAdapter.
             new EaseAlertDialog(this,"无此人").show();
             return;
         }
+        adapter.clear();
         adapter.addItem(beans);
     }
     /**
