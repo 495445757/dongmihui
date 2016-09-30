@@ -26,6 +26,7 @@ public class EaseTitleBar extends RelativeLayout{
     protected TextView titleView;
     protected RelativeLayout titleLayout;
     private Button occupation;
+    private ImageView imPoint;
 
     public EaseTitleBar(Context context, AttributeSet attrs, int defStyle) {
         this(context, attrs);
@@ -50,7 +51,15 @@ public class EaseTitleBar extends RelativeLayout{
         titleView = (TextView) findViewById(R.id.title);
         titleLayout = (RelativeLayout) findViewById(R.id.root);
         occupation = (Button) findViewById(R.id.occupation);
+        imPoint = (ImageView) findViewById(R.id.im_point);
         parseStyle(context, attrs);
+    }
+    public void setPoint(boolean isGone){
+        if(!isGone){
+            imPoint.setVisibility(VISIBLE);
+        }else{
+            imPoint.setVisibility(GONE);
+        }
     }
     public View getOccupation(){
         return occupation;

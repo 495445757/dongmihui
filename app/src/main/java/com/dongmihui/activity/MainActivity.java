@@ -20,14 +20,22 @@ import com.dongmihui.listen.BaseViewInterface;
 import com.dongmihui.listen.OnTabReselectListener;
 import com.dongmihui.R;
 import com.dongmihui.widget.MyFragmentTabHost;
+import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMCmdMessageBody;
+import com.hyphenate.chat.EMMessage;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+
 public class MainActivity extends BaseFragmentActivity  implements
         TabHost.OnTabChangeListener, BaseViewInterface, View.OnClickListener,
         View.OnTouchListener{
+
+    private TextView tabMes;
 
     public static void startMainActivity(Activity activity) {
         if (activity != null) {
@@ -92,6 +100,7 @@ public class MainActivity extends BaseFragmentActivity  implements
         mTabHost.setCurrentTab(0);
         mTabHost.setOnTabChangedListener(this);
 
+
     }
     private void initTabs() {
         MainTab[] tabs = MainTab.values();
@@ -110,12 +119,15 @@ public class MainActivity extends BaseFragmentActivity  implements
             TabHost.TabSpec tab = mTabHost.newTabSpec(getString(mainTab.getResName()));
             TextView title = (TextView) indicator.findViewById(R.id.tab_title);
             ImageView icon = (ImageView) indicator.findViewById(R.id.iv_icon);
+
             Drawable drawable = this.getResources().getDrawable(mainTab.getResIcon());
             icon.setImageDrawable(drawable);
-//            if (i == 2) {
+            if (i == 2) {
 //                indicator.setVisibility(View.INVISIBLE);
 //                mTabHost.setNoTabChangedTag(getString(mainTab.getResName()));
-//            }
+                tabMes = (TextView) indicator.findViewById(R.id.tab_mes);
+
+            }
             title.setText(getString(mainTab.getResName()));
             tab.setIndicator(indicator);
 
@@ -141,6 +153,22 @@ public class MainActivity extends BaseFragmentActivity  implements
     protected void onResume() {
         super.onResume();
         DemoHelper.getInstance().pushActivity(this);
+        refreshUnreadMsgs();
+        EMClient.getInstance().chatManager().addMessageListener(messageListener);
+    }
+
+    public void refreshUnreadMsgs() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                int unreadMsgsCount = EMClient.getInstance().chatManager().getUnreadMsgsCount();
+                if (unreadMsgsCount > 0) {
+                    tabMes.setVisibility(View.VISIBLE);
+                }else {
+                    tabMes.setVisibility(View.GONE);
+                }
+            }
+        });
 
     }
 
@@ -148,7 +176,7 @@ public class MainActivity extends BaseFragmentActivity  implements
     protected void onStop() {
         DemoHelper.getInstance().popActivity(this);
         super.onStop();
-
+        EMClient.getInstance().chatManager().removeMessageListener(messageListener);
     }
 
     @Override
@@ -171,6 +199,36 @@ public class MainActivity extends BaseFragmentActivity  implements
         }
         return consumed;
     }
+    EMMessageListener messageListener = new EMMessageListener() {
+
+        @Override
+        public void onMessageReceived(List<EMMessage> messages) {
+            // 通知新消息
+            for (EMMessage message : messages) {
+                DemoHelper.getInstance().getNotifier().onNewMsg(message);
+            }
+            refreshUnreadMsgs();
+        }
+
+        @Override
+        public void onCmdMessageReceived(List<EMMessage> messages) {
+
+        }
+
+        @Override
+        public void onMessageReadAckReceived(List<EMMessage> messages) {
+        }
+
+        @Override
+        public void onMessageDeliveryAckReceived(List<EMMessage> message) {
+        }
+
+        @Override
+        public void onMessageChanged(EMMessage message, Object change) {
+        }
+    };
+
+
 
 
 }

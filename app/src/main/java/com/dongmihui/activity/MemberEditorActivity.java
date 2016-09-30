@@ -375,6 +375,7 @@ public class MemberEditorActivity extends BaseActivity {
                 break;
             case R.id.btn_update:
                 update();
+
                 break;
         }
     }
@@ -406,6 +407,7 @@ public class MemberEditorActivity extends BaseActivity {
                         ToastUtil.showShort(AppContext.getInstance(),"修改完成");
                         DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
                         pd.dismiss();
+                        finish();
 //                        ToastUtil.showShort(AppContext.getInstance(),body.getCode());
 //                        if(body.getCode()==0){
 //                            ToastUtil.showShort(AppContext.getInstance(),"失败");
@@ -463,7 +465,7 @@ public class MemberEditorActivity extends BaseActivity {
         popupWindow.setOutsideTouchable(true);
         View parent = LayoutInflater.from(this).inflate(R.layout.activity_main, null);
         popupWindow.showAtLocation(parent, Gravity.BOTTOM, 0, 0);
-        //popupWindow在弹窗的时候背景半透明
+        //popupWindow在弹窗的时候背景全透明
         final WindowManager.LayoutParams params = getWindow().getAttributes();
         params.alpha = 1f;
         getWindow().setAttributes(params);
