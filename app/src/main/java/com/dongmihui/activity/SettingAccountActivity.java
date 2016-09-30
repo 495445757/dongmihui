@@ -89,6 +89,7 @@ public class SettingAccountActivity extends Activity {
                 imGetCode.setTextColor(SettingAccountActivity.this.getResources().getColor(R.color.bar_bg));
                 imGetCode.setTextSize(16.0f);
                 imGetCode.setEnabled(true);
+                i=120;
             }else {
                 i--;
                 imGetCode.setText(i+"s");

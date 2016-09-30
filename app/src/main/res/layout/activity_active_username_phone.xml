@@ -10,8 +10,9 @@
         android:background="@color/bar_bg"
         >
         <ImageView
+            android:id="@+id/im_back"
             android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_height="match_parent"
             android:src="@drawable/btn_back"
             android:layout_marginTop="10dp"
             />
@@ -107,15 +108,18 @@
                 android:textColor="#ff111111"
                 android:textColorHint="#ffaaaaaa"
                 android:textSize="16.0sp" />
-
-            <ImageView
-                android:id="@+id/btnGetCode"
-                android:layout_width="85.0dip"
-                android:layout_height="33.0dip"
+            <TextView
+                android:gravity="center"
+                android:id="@+id/im_GetCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10.0dip"
-                android:src="@drawable/im_getcode"
+                android:text="获取验证码"
+                android:clickable="true"
+                android:textSize="16sp"
+                android:textColor="@color/bar_bg"
                 />
         </RelativeLayout>
 

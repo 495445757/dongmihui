@@ -56,4 +56,9 @@ public class UserApi {
         Call<ApiMessage<ApiMessage.UserID>> activateCall = server.getActivate(email, activate);
         activateCall.enqueue(callback);
     }
+
+    public void register(int id,String phone,String code,String pwd,Callback<ApiMessage> callback){
+        Call<ApiMessage> register = server.getRegister(id, phone, code, pwd);
+        register.enqueue(callback);
+    }
 }
